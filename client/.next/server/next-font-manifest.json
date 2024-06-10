@@ -1,15 +1,1 @@
-{
-  "app": {
-    "[project]/app/page": [
-      "static/media/GeistVF-s.p.7fe29570.woff",
-      "static/media/GeistMonoVF-s.p.a9159d35.woff"
-    ],
-    "[project]/app/_not-found/page": [
-      "static/media/GeistVF-s.p.7fe29570.woff",
-      "static/media/GeistMonoVF-s.p.a9159d35.woff"
-    ]
-  },
-  "appUsingSizeAdjust": true,
-  "pages": {},
-  "pagesUsingSizeAdjust": false
-}
+{"pages":{},"app":{"/home/manhpc/code/FunnyMovies/client/app/layout":["static/media/463dafcda517f24f-s.p.woff","static/media/4473ecc91f70f139-s.p.woff"]},"appUsingSizeAdjust":true,"pagesUsingSizeAdjust":false}

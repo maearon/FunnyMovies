@@ -75,10 +75,10 @@ const Index: NextPage = () => {
       <li key={i}>
         <Image
           className={"gravatar"}
-          src={"https://secure.gravatar.com/avatar/"+u.gravatar_id+"?s="+u.size}
+          src={"https://secure.gravatar.com/avatar/"+u.gravatar_id+"?s=50"}
           alt={u.name}
-          width={u.size}
-          height={u.size}
+          width={50}
+          height={50}
           priority
         />
         <a href={'/users/'+u.id}>{u.name}</a>

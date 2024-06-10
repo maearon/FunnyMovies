@@ -92,7 +92,7 @@ const Home: NextPage = () => {
 
       var BASE_URL = ''
       if (process.env.NODE_ENV === 'development') {
-        BASE_URL = 'http://localhost:3001/api'
+        BASE_URL = 'http://localhost:3000/api'
       } else if (process.env.NODE_ENV === 'production') {
         BASE_URL = 'https://railstutorialapi.herokuapp.com/api'
       }
@@ -213,7 +213,7 @@ const Home: NextPage = () => {
                 <ErrorMessage name='comments' component={TextError} /> */}
             </div>
             <input ref={inputEl} type="submit" name="commit" value="Post" className="btn btn-primary" data-disable-with="Post" />
-            <span className="image">
+            {/* <span className="image">
               <input
               ref={inputImage}
               accept="image/jpeg,image/gif,image/png"
@@ -222,7 +222,7 @@ const Home: NextPage = () => {
               id="micropost_image"
               onChange={handleImageInput}
               />
-            </span>
+            </span> */}
           </form>
         </section>
       </aside>

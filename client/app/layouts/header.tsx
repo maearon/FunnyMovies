@@ -53,6 +53,7 @@ const Header: NextPage = () => {
             <li><Link href="/">{userData.error}</Link></li>
             ) : userData.loggedIn ? (
             <>
+            <li><Link href={"/users"}>Users</Link></li>
             <li><Link href={"/users/"+userData.value.id}>Profile</Link></li>
             <li><Link href={"/users/"+userData.value.id+"/edit"}>Settings</Link></li>
             <li className="divider"></li>

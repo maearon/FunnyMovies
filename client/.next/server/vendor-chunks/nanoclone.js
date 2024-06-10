@@ -1,0 +1,25 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+exports.id = "vendor-chunks/nanoclone";
+exports.ids = ["vendor-chunks/nanoclone"];
+exports.modules = {
+
+/***/ "(ssr)/./node_modules/nanoclone/src/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/nanoclone/src/index.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ clone)\n/* harmony export */ });\n// ES6 Map\nvar map\ntry {\n  map = Map\n} catch (_) { }\nvar set\n\n// ES6 Set\ntry {\n  set = Set\n} catch (_) { }\n\nfunction baseClone (src, circulars, clones) {\n  // Null/undefined/functions/etc\n  if (!src || typeof src !== 'object' || typeof src === 'function') {\n    return src\n  }\n\n  // DOM Node\n  if (src.nodeType && 'cloneNode' in src) {\n    return src.cloneNode(true)\n  }\n\n  // Date\n  if (src instanceof Date) {\n    return new Date(src.getTime())\n  }\n\n  // RegExp\n  if (src instanceof RegExp) {\n    return new RegExp(src)\n  }\n\n  // Arrays\n  if (Array.isArray(src)) {\n    return src.map(clone)\n  }\n\n  // ES6 Maps\n  if (map && src instanceof map) {\n    return new Map(Array.from(src.entries()))\n  }\n\n  // ES6 Sets\n  if (set && src instanceof set) {\n    return new Set(Array.from(src.values()))\n  }\n\n  // Object\n  if (src instanceof Object) {\n    circulars.push(src)\n    var obj = Object.create(src)\n    clones.push(obj)\n    for (var key in src) {\n      var idx = circulars.findIndex(function (i) {\n        return i === src[key]\n      })\n      obj[key] = idx > -1 ? clones[idx] : baseClone(src[key], circulars, clones)\n    }\n    return obj\n  }\n\n  // ???\n  return src\n}\n\nfunction clone (src) {\n  return baseClone(src, [], [])\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHNzcikvLi9ub2RlX21vZHVsZXMvbmFub2Nsb25lL3NyYy9pbmRleC5qcyIsIm1hcHBpbmdzIjoiOzs7O0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQSxFQUFFO0FBQ0Y7O0FBRUE7QUFDQTtBQUNBO0FBQ0EsRUFBRTs7QUFFRjtBQUNBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBOztBQUVBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSxPQUFPO0FBQ1A7QUFDQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBOztBQUVlO0FBQ2Y7QUFDQSIsInNvdXJjZXMiOlsid2VicGFjazovL2NsaWVudC8uL25vZGVfbW9kdWxlcy9uYW5vY2xvbmUvc3JjL2luZGV4LmpzPzFlNjEiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gRVM2IE1hcFxudmFyIG1hcFxudHJ5IHtcbiAgbWFwID0gTWFwXG59IGNhdGNoIChfKSB7IH1cbnZhciBzZXRcblxuLy8gRVM2IFNldFxudHJ5IHtcbiAgc2V0ID0gU2V0XG59IGNhdGNoIChfKSB7IH1cblxuZnVuY3Rpb24gYmFzZUNsb25lIChzcmMsIGNpcmN1bGFycywgY2xvbmVzKSB7XG4gIC8vIE51bGwvdW5kZWZpbmVkL2Z1bmN0aW9ucy9ldGNcbiAgaWYgKCFzcmMgfHwgdHlwZW9mIHNyYyAhPT0gJ29iamVjdCcgfHwgdHlwZW9mIHNyYyA9PT0gJ2Z1bmN0aW9uJykge1xuICAgIHJldHVybiBzcmNcbiAgfVxuXG4gIC8vIERPTSBOb2RlXG4gIGlmIChzcmMubm9kZVR5cGUgJiYgJ2Nsb25lTm9kZScgaW4gc3JjKSB7XG4gICAgcmV0dXJuIHNyYy5jbG9uZU5vZGUodHJ1ZSlcbiAgfVxuXG4gIC8vIERhdGVcbiAgaWYgKHNyYyBpbnN0YW5jZW9mIERhdGUpIHtcbiAgICByZXR1cm4gbmV3IERhdGUoc3JjLmdldFRpbWUoKSlcbiAgfVxuXG4gIC8vIFJlZ0V4cFxuICBpZiAoc3JjIGluc3RhbmNlb2YgUmVnRXhwKSB7XG4gICAgcmV0dXJuIG5ldyBSZWdFeHAoc3JjKVxuICB9XG5cbiAgLy8gQXJyYXlzXG4gIGlmIChBcnJheS5pc0FycmF5KHNyYykpIHtcbiAgICByZXR1cm4gc3JjLm1hcChjbG9uZSlcbiAgfVxuXG4gIC8vIEVTNiBNYXBzXG4gIGlmIChtYXAgJiYgc3JjIGluc3RhbmNlb2YgbWFwKSB7XG4gICAgcmV0dXJuIG5ldyBNYXAoQXJyYXkuZnJvbShzcmMuZW50cmllcygpKSlcbiAgfVxuXG4gIC8vIEVTNiBTZXRzXG4gIGlmIChzZXQgJiYgc3JjIGluc3RhbmNlb2Ygc2V0KSB7XG4gICAgcmV0dXJuIG5ldyBTZXQoQXJyYXkuZnJvbShzcmMudmFsdWVzKCkpKVxuICB9XG5cbiAgLy8gT2JqZWN0XG4gIGlmIChzcmMgaW5zdGFuY2VvZiBPYmplY3QpIHtcbiAgICBjaXJjdWxhcnMucHVzaChzcmMpXG4gICAgdmFyIG9iaiA9IE9iamVjdC5jcmVhdGUoc3JjKVxuICAgIGNsb25lcy5wdXNoKG9iailcbiAgICBmb3IgKHZhciBrZXkgaW4gc3JjKSB7XG4gICAgICB2YXIgaWR4ID0gY2lyY3VsYXJzLmZpbmRJbmRleChmdW5jdGlvbiAoaSkge1xuICAgICAgICByZXR1cm4gaSA9PT0gc3JjW2tleV1cbiAgICAgIH0pXG4gICAgICBvYmpba2V5XSA9IGlkeCA+IC0xID8gY2xvbmVzW2lkeF0gOiBiYXNlQ2xvbmUoc3JjW2tleV0sIGNpcmN1bGFycywgY2xvbmVzKVxuICAgIH1cbiAgICByZXR1cm4gb2JqXG4gIH1cblxuICAvLyA/Pz9cbiAgcmV0dXJuIHNyY1xufVxuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBjbG9uZSAoc3JjKSB7XG4gIHJldHVybiBiYXNlQ2xvbmUoc3JjLCBbXSwgW10pXG59XG4iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(ssr)/./node_modules/nanoclone/src/index.js\n");
+
+/***/ })
+
+};
+;

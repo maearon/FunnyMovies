@@ -2,7 +2,7 @@ import { GraphQLClient, gql } from 'graphql-request'
 
 let BASE_URL = ''
 if (process.env.NODE_ENV === 'development') {
-  BASE_URL = 'http://localhost:3001/graphql'
+  BASE_URL = 'http://localhost:3000/graphql'
 } else {
   BASE_URL = 'https://railstutorialapi.herokuapp.com/graphql'
 }

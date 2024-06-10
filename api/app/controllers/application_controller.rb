@@ -1,5 +1,5 @@
-class ApplicationController < ActionController::API
-  # protect_from_forgery with: :exception, if: -> { request.format.json? }
+class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception, if: -> { request.format.json? }
   # include SessionsHelper
   # include CartsHelper
   # include WishesHelper
