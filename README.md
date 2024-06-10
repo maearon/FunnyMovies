@@ -33,17 +33,28 @@ rbenv rehash
 cd FunnyMovies/
 rails new api  --api --database=postgresql
 cd api/
-git add .
+rm -rf .git
+cd ..
+git add api/
 git commit -m "Add API files"
+git push --set-upstream origin main
+git config --global push.default current (or upstream)
+cd api/
 rails g scaffold Video url:string description:text
-rails s -p 3001
 ```
 * System dependencies
 
 * Configuration
-
+```
+cd api/
+rails s -p 3001
+---> http://127.0.0.1:3001/
+```
 * Database creation
-
+```
+rails db:create
+rails db:migrate
+```
 * Database initialization
 
 * How to run the test suite
