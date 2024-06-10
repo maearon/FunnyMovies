@@ -1,0 +1,12 @@
+fragment MicropostDetailsFragment on Micropost {
+  id
+  content
+  createdAt
+  updatedAt
+  postedBy{
+    id
+    name
+    createdAt
+    updatedAt
+  }
+}

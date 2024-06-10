@@ -1,0 +1,23 @@
+query ProductCollection(
+  $before: String
+  $after: String
+  $filter: ProductFilterInput
+  $channel: String!
+  $locale: LanguageCodeEnum!
+) {
+  products(first: 4, channel: $channel, after: $after, before: $before, filter: $filter) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...ProductCardFragment
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+  }
+}

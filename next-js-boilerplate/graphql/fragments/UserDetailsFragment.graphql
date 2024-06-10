@@ -1,0 +1,11 @@
+fragment UserDetailsFragment on User {
+  id
+  name
+  email
+  admin
+  createdAt
+  updatedAt
+  microposts {
+    ...MicropostDetailsFragment
+  }
+}

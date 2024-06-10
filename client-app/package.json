@@ -1,17 +1,8 @@
 {
-  "name": "client",
+  "name": "client-app",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "@microsoft/signalr": "^7.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -26,9 +17,11 @@
     "formik": "^2.2.9",
     "mobx": "^6.7.0",
     "mobx-react-lite": "^3.4.0",
+    "react": "^18.2.0",
     "react-calendar": "^4.0.0",
     "react-cropper": "^2.1.8",
     "react-datepicker": "^4.8.0",
+    "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-infinite-scroller": "^1.2.6",
     "react-router-dom": "^6.4.3",
@@ -41,17 +34,31 @@
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "BUILD_PATH='../API/wwwroot' react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "devDependencies": {
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.6",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0",
     "@types/react-calendar": "^3.9.0",
     "@types/react-datepicker": "^4.8.0",
     "@types/uuid": "^9.0.0",
