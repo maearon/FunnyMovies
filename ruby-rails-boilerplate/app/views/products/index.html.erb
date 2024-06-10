@@ -1,0 +1,48 @@
+<!-- Hero Section-->
+<!-- <section class="hero hero-page gray-bg padding-small">
+  <div class="container">
+    <div class="row d-flex">
+      <div class="col-lg-9 order-2 order-lg-1">
+        <h1>Shop</h1><p class="lead text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+      </div>
+      <div class="col-lg-3 text-right order-1 order-lg-2">
+        <ul class="breadcrumb justify-content-lg-end">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Shop</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section> -->
+<main>
+  <div class="container">
+    <div class="row">
+      <!-- Grid -->
+      <div class="products-grid col-12 sidebar-none">
+        <%= paginate @products %>
+        <div class="row">
+          <%= render @products %>
+        </div>
+        <header class="d-flex justify-content-between align-items-start"><span class="visible-items"><%= page_entries_info @products, entry_name: 'item' %></span>
+          <select id="sorting" class="bs-select">
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="lowest-price">Low Price</option>
+            <option value="heigh-price">High Price</option>
+          </select>
+        </header>
+      </div>
+      <!-- / Grid End-->
+    </div>
+  </div>
+</main>
+<!-- Overview Popup    -->
+<div id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade overview">
+  <div role="document" class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="icon-close"></i></span></button>
+      <%= render "shared/modal" %>
+      </div>
+    </div>
+  </div>
+</div>

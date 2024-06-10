@@ -1,0 +1,33 @@
+<nav id="sidebar">
+    <div class="sidebar-header">
+        <h3>Clothes Hub</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+        <p>Managerment</p>
+        <li class="<%= is_active_controller("admin/static_pages") %>">
+            <%= link_to "Admin", admin_root_path, class: "dropdown-toggle" %>
+        </li>
+        <li class="<%= is_active_controller("admin/users") %>">
+            <%= link_to "User", admin_users_path, class: "dropdown-toggle" %>
+        </li>
+        <li class="<%= is_active_controller("admin/products") %>">
+            <%= link_to "Product", admin_products_path, class: "dropdown-toggle" %>
+        </li>
+        <li class="<%= is_active_controller("admin/orders") %>">
+            <%= link_to "Order", admin_orders_path, class: "dropdown-toggle" %>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled CTAs">
+        <li>
+            <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+        </li>
+        <li>
+            <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+        </li>
+        <li>
+            <%= link_to "Back to shop", root_path, class: "article" %>
+        </li>
+    </ul>
+</nav>

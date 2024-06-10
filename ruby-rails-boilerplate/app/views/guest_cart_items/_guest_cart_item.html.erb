@@ -1,0 +1,25 @@
+<!-- Product-->
+<div class="item">
+  <div class="row d-flex align-items-center">
+    <div class="col-5">
+      <div class="d-flex align-items-center"><%= image_tag guest_cart_item.variant.images.first, alt: "...", class: "img-fluid" %>
+        <div class="title"><a href="<%= url_for(guest_cart_item.product)<<"?variant=#{guest_cart_item&.variant_id}" %>">
+            <h5><%= guest_cart_item.product.name %></h5><span class="text-muted">Size: Large</span></a></div>
+      </div>
+    </div>
+    <div class="col-2"><span><%= number_to_currency(guest_cart_item.variant.price) %></span></div>
+    <div class="col-2">
+      <div class="d-flex align-items-center">
+        <div class="quantity d-flex align-items-center">
+          <div class="dec-btn"><%= link_to guest_cart_item_url(guest_cart_item, dec: "dec"), method: :put, remote: true do %>-<% end %></div>
+          <input type="text" value="<%= guest_cart_item.quantity %>" min="1" max="15" class="quantity-no">
+          <div class="inc-btn"><%= link_to guest_cart_item_url(guest_cart_item, inc: "inc"), method: :put, remote: true do %>+<% end %></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-2"><span><%= number_to_currency(guest_cart_item.total_price) %></span></div>
+    <%= link_to guest_cart_item_url(guest_cart_item), method: :delete do %>
+    <div class="col-1 text-center"><i class="delete fa fa-trash"></i></div>
+    <% end %>
+  </div>
+</div>

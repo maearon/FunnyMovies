@@ -1,0 +1,25 @@
+<h1>Editing Product</h1>
+
+<% if @product&.variants&.first&.images&.attached? %>
+  <table>
+    <% @product&.variants&.each do |variant| %>
+    <tr>
+      <% if variant&.avatar&.attached? %>
+      <td><%= image_tag variant&.avatar, size: "30x30" %></td>
+      <% end %>
+
+      <% if variant&.hover&.attached? %>
+      <td><%= image_tag variant&.hover, size: "30x30" %></td>
+      <% end %>
+
+      <% variant&.images&.each do |image| %>
+      <td><%= image_tag image, size: "20x20" %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<%= render 'form', project: @project %>
+
+<%= link_to 'Back', admin_products_path %>

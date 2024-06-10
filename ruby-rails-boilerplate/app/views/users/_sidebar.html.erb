@@ -1,0 +1,18 @@
+<div class="customer-sidebar col-xl-3 col-lg-4 mb-md-5">
+  <div class="customer-profile"><a href="https://gravatar.com/emails" target="_blank" class="d-inline-block"><%= gravatar_for current_user %></a>
+    <h5><%= current_user.name %></h5>
+    <p class="text-muted text-small">Ostrava, Czech republic</p>
+  </div>
+  <nav class="list-group customer-nav">
+
+    <a href="<%= url_for(my_account_path) %>" class="<%= is_active_controller("users") %> list-group-item d-flex justify-content-between align-items-center"><span><span class="icon icon-profile"></span>Profile</span></a>
+
+    <a href="<%= url_for(orders_path) %>" class="<%= is_active_controller("orders") %> list-group-item d-flex justify-content-between align-items-center"><span><span class="icon icon-bag"></span>Orders</span><small class="badge badge-pill badge-primary"><%= current_user.orders.length %></small></a>
+
+    <a href="<%= url_for(addresses_path) %>" class="<%= is_active_controller("addresses") %> list-group-item d-flex justify-content-between align-items-center"><span><span class="icon icon-map"></span>Addresses</span></a>
+
+  <%= link_to logout_path, method: :delete, class: "list-group-item d-flex justify-content-between align-items-center" do %>
+    <span><span class="fa fa-sign-out"></span>Log out</span>
+  <% end %>
+  </nav>
+</div>
