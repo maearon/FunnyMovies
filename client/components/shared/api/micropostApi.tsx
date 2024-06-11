@@ -27,6 +27,7 @@ export interface Micropost {
   title?: string
   description?: string
   videoId?: string
+  channelTitle?: string
 }
 
 // export interface CreateParams {

@@ -30,7 +30,7 @@ const Header: NextPage = () => {
   return (
     <header className="navbar navbar-fixed-top navbar-inverse">
       <div className="container">
-        <Link href="/" id="logo">Funny Movies</Link>
+        <Link href="/" id="logo"><i className="fa fa-home"></i> Funny Movies</Link>
         <nav>
           <div className="navbar-header">
             <button type="button" className="navbar-toggle collapsed"

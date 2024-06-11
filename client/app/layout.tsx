@@ -52,6 +52,11 @@ export default function RootLayout({
             </div>
             <Script src="/public/jquery-1.11.0.min.js"></Script>
             <Script src="/public/bootstrap.min.js"></Script>
+            <Script
+              // you might need to get a newer version
+              src="https://kit.fontawesome.com/fbadad80a0.js"
+              crossOrigin="anonymous"
+            ></Script>
           </div>
         </body>
       </html>

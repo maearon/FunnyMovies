@@ -52,10 +52,12 @@ const Home: NextPage = () => {
       }
       const data = await response.json();
       const videoData = data.items[0].snippet;
+      console.log('videoData', videoData)
       return {
         title: videoData.title,
         description: videoData.description,
         videoId: videoId,
+        channelTitle: videoData.channelTitle,
       };
     } catch (error) {
       console.error('Failed to fetch video details:', error);
@@ -239,7 +241,7 @@ const Home: NextPage = () => {
             <div className="field">
                 <label htmlFor="micropost[content]">Youtube URL:</label>
                 <textarea
-                // placeholder="Compose new micropost..."
+                placeholder="Compose new url https://www.youtube.com/embed/abPmZCZZrFA?si=CJdRW8sNd5laZsfJ..."
                 name="micropost[content]"
                 id="micropost_content"
                 value={content}
@@ -287,15 +289,12 @@ const Home: NextPage = () => {
                   />
                 </Link>
                 <span className="user"><Link href={'/users/'+i.user_id}>{i.user_name}</Link></span>
+                
                 <span className="content">
                   <b>{i.title}</b>
+                  <Link href={"https://www.youtube.com/results?search_query="+i.channelTitle}>({i.channelTitle})</Link>
                   <div className="videoWrapper">
-                    {/* <iframe width="420" height="315"
-                      src={i.content+"&index=1"}>
-                    </iframe> */}
-                    <iframe id="iframe" 
-                      // width="420" height="315"
-                      // style="width:100%;height:100%"
+                    <iframe
                       src={"https://www.youtube.com/embed/"+i.videoId}
                       data-autoplay-src={"https://www.youtube.com/embed/"+i.videoId+"?autoplay=1"}> 
                     </iframe>
@@ -312,7 +311,7 @@ const Home: NextPage = () => {
                   }
                 </span>
                 <span className="timestamp">
-                {'Posted '+i.timestamp+' ago. '}
+                {'Shared '+i.timestamp+' ago. '}
                 {userData.value.id === i.user_id &&
                   <Link href={'#/microposts/'+i.id} onClick={() => removeMicropost(i.id)}>delete</Link>
                 }
