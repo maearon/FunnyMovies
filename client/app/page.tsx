@@ -288,11 +288,13 @@ const Home: NextPage = () => {
                 </Link>
                 <span className="user"><Link href={'/users/'+i.user_id}>{i.user_name}</Link></span>
                 <span className="content">
+                  <b>{i.title}</b>
                   <div className="videoWrapper">
                     {/* <iframe width="420" height="315"
                       src={i.content+"&index=1"}>
                     </iframe> */}
-                    <iframe id="iframe" width="420" height="315"
+                    <iframe id="iframe" 
+                      // width="420" height="315"
                       // style="width:100%;height:100%"
                       src={"https://www.youtube.com/embed/"+i.videoId}
                       data-autoplay-src={"https://www.youtube.com/embed/"+i.videoId+"?autoplay=1"}> 
