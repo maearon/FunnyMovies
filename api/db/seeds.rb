@@ -41,10 +41,15 @@ users = User.order(:created_at).take(6)
 end
 
 # https://commentpicker.com/youtube-channel-id.php UC --> UU or View page source Search content="https://www.youtube.com/channel/
-users.first.microposts.create!(content:"https://www.youtube.com/embed?listType=playlist&list=UUEpwKlaYn7Li3Nh_kQLmCTA") # lastest
-users.first.microposts.create!(content:"https://www.youtube.com/embed?list=UULPlyA28-01x4z60eWQ2kiNbA") # most popular
-users.second.microposts.create!(content:"https://www.youtube.com/embed?list=UULPAyH4gCci0K41gNAxzIindg") # most popular
-users.third.microposts.create!(content:"https://www.youtube.com/embed?listType=playlist&list=UUH7RfbP4El0ykEAkvZphBmw") # lastest
+# users.first.microposts.create!(content:"https://www.youtube.com/embed?listType=playlist&list=UUEpwKlaYn7Li3Nh_kQLmCTA") # lastest
+# users.first.microposts.create!(content:"https://www.youtube.com/embed?list=UULPlyA28-01x4z60eWQ2kiNbA") # most popular
+# users.second.microposts.create!(content:"https://www.youtube.com/embed?list=UULPAyH4gCci0K41gNAxzIindg") # most popular
+# users.third.microposts.create!(content:"https://www.youtube.com/embed?listType=playlist&list=UUH7RfbP4El0ykEAkvZphBmw") # lastest
+
+users.first.microposts.create!(content:"https://www.youtube.com/embed/vkcXq6Blh5A?si=bU4V8qDUB2JC_Ggn")
+users.first.microposts.create!(content:"https://www.youtube.com/embed/FN7ALfpGxiI?si=UJa9aDGrH2PyADwK")
+users.second.microposts.create!(content:"https://www.youtube.com/embed/_FDljyvKDmc?si=n_72DEhz6uP6gjJr")
+users.third.microposts.create!(content:"https://www.youtube.com/embed/Di7ViBcuw5k?si=Gr5i8oPYcK1qWlvR")
 
 # Create following relationships.
 users = User.all

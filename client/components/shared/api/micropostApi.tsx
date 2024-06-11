@@ -24,6 +24,9 @@ export interface Micropost {
   timestamp: string
   readonly user_id: number
   user_name?: string
+  title?: string
+  description?: string
+  videoId?: string
 }
 
 // export interface CreateParams {

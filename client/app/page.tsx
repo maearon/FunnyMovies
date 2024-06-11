@@ -33,11 +33,53 @@ const Home: NextPage = () => {
   const [errors, setErrors] = useState([] as string[])
   const userData = useAppSelector(selectUser)
 
+  const extractVideoId = (youtubeUrl: string): string | null => {
+    const regExp = /embed\/([^?]*)/;
+    const match = youtubeUrl.match(regExp);
+    return (match && match[1]) ? match[1] : null;
+  };
+
+  const fetchVideoDetails = async (videoId: string) => {
+    // https://www.geeksforgeeks.org/how-to-get-youtube-video-data-by-using-youtube-data-api-and-php/
+    // https://console.cloud.google.com/apis/credentials?orgonly=true&project=apt-helix-426002-r5&supportedpurview=project,organizationId,folder
+    const apiKey = 'AIzaSyAkH2rWcj2SLdgLSpSxg6yxsVQAupJ38FE'; // Replace with your YouTube API key
+    const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      const videoData = data.items[0].snippet;
+      return {
+        title: videoData.title,
+        description: videoData.description,
+        videoId: videoId,
+      };
+    } catch (error) {
+      console.error('Failed to fetch video details:', error);
+      return null;
+    }
+  };
+
   const setFeeds= useCallback(async () => { 
     micropostApi.getAll({page: page}
-    ).then((response: ListResponse<Micropost>) => {
+    ).then(async (response: ListResponse<Micropost>) => {
       if (response.feed_items) {
-        setFeedItems(response.feed_items)
+        const updatedFeedItems = await Promise.all(
+          response.feed_items.map(async (item) => {
+            const videoId = extractVideoId(item.content);
+            if (videoId) {
+              const details = await fetchVideoDetails(videoId);
+              if (details) {
+                return { ...item, ...details };
+              }
+            }
+            return item;
+          })
+        );
+        setFeedItems(updatedFeedItems)
         setTotalCount(response.total_count)
         setFollowing(response.following)
         setFollowers(response.followers)
@@ -247,11 +289,16 @@ const Home: NextPage = () => {
                 <span className="user"><Link href={'/users/'+i.user_id}>{i.user_name}</Link></span>
                 <span className="content">
                   <div className="videoWrapper">
-                    <iframe width="420" height="315"
+                    {/* <iframe width="420" height="315"
                       src={i.content+"&index=1"}>
+                    </iframe> */}
+                    <iframe id="iframe" width="420" height="315"
+                      // style="width:100%;height:100%"
+                      src={"https://www.youtube.com/embed/"+i.videoId}
+                      data-autoplay-src={"https://www.youtube.com/embed/"+i.videoId+"?autoplay=1"}> 
                     </iframe>
                   </div>
-                  {i.content}
+                  {i.description}
                   { i.image &&
                     <Image
                       src={''+i.image+''}
