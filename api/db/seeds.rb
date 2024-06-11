@@ -34,7 +34,7 @@ end
 users = User.order(:created_at).take(6)
 50.times do
   # content = 'Content Micropost'
-  content = Faker::Lorem.sentence(word_count: 5)
+  content = "https://www.youtube.com/embed/abPmZCZZrFA?si=CJdRW8sNd5laZsfJ"
   users.each { |user| user.microposts.create!(content: content) }
 end
 

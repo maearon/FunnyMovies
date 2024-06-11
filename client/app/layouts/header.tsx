@@ -11,7 +11,8 @@ const Header: NextPage = () => {
   const userData = useAppSelector(selectUser);
   const dispatch = useDispatch()
 
-  const onClick = () => {
+  const onClick = (e: any) => {
+    e.preventDefault()
     sessionApi.destroy(
     ).then(() => {
       dispatch(fetchUser())
@@ -29,7 +30,7 @@ const Header: NextPage = () => {
   return (
     <header className="navbar navbar-fixed-top navbar-inverse">
       <div className="container">
-        <Link href="/" id="logo">sample app</Link>
+        <Link href="/" id="logo">Funny Movies</Link>
         <nav>
           <div className="navbar-header">
             <button type="button" className="navbar-toggle collapsed"
@@ -44,8 +45,8 @@ const Header: NextPage = () => {
           </div>
           <ul className="nav navbar-nav navbar-right collapse navbar-collapse"
               id="bs-example-navbar-collapse-1">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/help">Help</Link></li>
+            {/* <li><Link href="/">Home</Link></li>
+            <li><Link href="/help">Help</Link></li> */}
             {
             userData.status === 'failed' ? (
             <li><Link href="/">Loading</Link></li>
@@ -53,12 +54,13 @@ const Header: NextPage = () => {
             <li><Link href="/">{userData.error}</Link></li>
             ) : userData.loggedIn ? (
             <>
-            <li><Link href={"/users"}>Users</Link></li>
+            <li><Link href={"/users/"+userData.value.id}>{"Welcome "+userData.value.email}</Link></li>
+            {/* <li><Link href={"/users"}>Users</Link></li>
             <li><Link href={"/users/"+userData.value.id}>Profile</Link></li>
-            <li><Link href={"/users/"+userData.value.id+"/edit"}>Settings</Link></li>
+            <li><Link href={"/users/"+userData.value.id+"/edit"}>Settings</Link></li> */}
             <li className="divider"></li>
             <li>
-              <Link href="#logout" onClick={onClick}>Log out</Link>
+              <Link href="#logout" onClick={onClick}>Logout</Link>
             </li>
             </>
             ) : (

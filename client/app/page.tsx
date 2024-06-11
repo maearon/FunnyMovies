@@ -227,7 +227,7 @@ const Home: NextPage = () => {
       </aside>
 
       <div className="col-md-8">
-        <h3>Micropost Feed</h3>
+        {/* <h3>Micropost Feed</h3> */}
         {feed_items.length > 0 &&
         <>
         <ol className="microposts">
@@ -245,6 +245,9 @@ const Home: NextPage = () => {
                 </Link>
                 <span className="user"><Link href={'/users/'+i.user_id}>{i.user_name}</Link></span>
                 <span className="content">
+                  <iframe width="420" height="315"
+                    src={i.content+"?loop=1?autoplay=1"}>
+                  </iframe>
                   {i.content}
                   { i.image &&
                     <Image

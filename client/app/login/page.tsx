@@ -63,7 +63,7 @@ const New: NextPage = () => {
           sessionStorage.setItem("remember_token", response.tokens.access.token)
         }
         dispatch(fetchUser())
-        router.push("/users/"+response.user.id)
+        router.push("/")
       }
       // if (response.error) {
       //   console.log(Object.assign({}, response.error))
