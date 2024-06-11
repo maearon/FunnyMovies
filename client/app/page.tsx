@@ -79,54 +79,53 @@ const Home: NextPage = () => {
   }
 
   const handleSubmit = (e: any) => {
-      const formData2 = new FormData()
-      formData2.append('micropost[content]',
-        content
-      )
-      if (image) {
-      formData2.append('micropost[image]',
-        image || new Blob,
-        imageName
-      )
-      }
-
-      var BASE_URL = ''
-      if (process.env.NODE_ENV === 'development') {
-        BASE_URL = 'http://localhost:3000/api'
-      } else if (process.env.NODE_ENV === 'production') {
-        BASE_URL = 'https://railstutorialapi.herokuapp.com/api'
-      }
-
-      fetch(BASE_URL+`/microposts`, {
-        method: "POST",
-        body: formData2,
-        credentials: 'include',
-        headers: {
-          'Authorization': localStorage.getItem('token') && localStorage.getItem('token') !== 'undefined' ?
-          `Bearer ${localStorage.getItem('token')} ${localStorage.getItem('remember_token')}` :
-          `Bearer ${sessionStorage.getItem('token')} ${sessionStorage.getItem('remember_token')}`
-        }
-      })
-      .then((response: any) => response.json().then((data: CreateResponse) => {
-        
-        if (data.flash) {
-          inputEl.current.blur()
-          flashMessage(...data.flash)
-          setContent('')
-          setImage(null)
-          inputImage.current.value = ''
-          setErrors([])
-          setFeeds()
-        }
-        if (data.error) {
-          inputEl.current.blur()
-          setErrors(data.error)
-        }
-
-      })
-      )
-
     e.preventDefault()
+    const formData2 = new FormData()
+    formData2.append('micropost[content]',
+      content
+    )
+    if (image) {
+    formData2.append('micropost[image]',
+      image || new Blob,
+      imageName
+    )
+    }
+
+    var BASE_URL = ''
+    if (process.env.NODE_ENV === 'development') {
+      BASE_URL = 'http://localhost:3000/api'
+    } else if (process.env.NODE_ENV === 'production') {
+      BASE_URL = 'https://railstutorialapi.herokuapp.com/api'
+    }
+
+    fetch(BASE_URL+`/microposts`, {
+      method: "POST",
+      body: formData2,
+      credentials: 'include',
+      headers: {
+        'Authorization': localStorage.getItem('token') && localStorage.getItem('token') !== 'undefined' ?
+        `Bearer ${localStorage.getItem('token')} ${localStorage.getItem('remember_token')}` :
+        `Bearer ${sessionStorage.getItem('token')} ${sessionStorage.getItem('remember_token')}`
+      }
+    })
+    .then((response: any) => response.json().then((data: CreateResponse) => {
+      
+      if (data.flash) {
+        setFeeds()
+        inputEl.current.blur()
+        flashMessage(...data.flash)
+        setContent('')
+        setImage(null)
+        inputImage.current.value = ''
+        setErrors([])
+      }
+      if (data.error) {
+        inputEl.current.blur()
+        setErrors(data.error)
+      }
+
+    })
+    )
   }
 
   const removeMicropost = (micropostid: number) => {
