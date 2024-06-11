@@ -195,8 +195,9 @@ const Home: NextPage = () => {
               errorMessage(errors)
             }
             <div className="field">
+                <label htmlFor="micropost[content]">Youtube URL:</label>
                 <textarea
-                placeholder="Compose new micropost..."
+                // placeholder="Compose new micropost..."
                 name="micropost[content]"
                 id="micropost_content"
                 value={content}
@@ -211,7 +212,7 @@ const Home: NextPage = () => {
                 />
                 <ErrorMessage name='comments' component={TextError} /> */}
             </div>
-            <input ref={inputEl} type="submit" name="commit" value="Post" className="btn btn-primary" data-disable-with="Post" />
+            <input ref={inputEl} type="submit" name="commit" value="Share" className="btn btn-primary" data-disable-with="Post" />
             {/* <span className="image">
               <input
               ref={inputImage}
@@ -245,9 +246,11 @@ const Home: NextPage = () => {
                 </Link>
                 <span className="user"><Link href={'/users/'+i.user_id}>{i.user_name}</Link></span>
                 <span className="content">
-                  <iframe width="420" height="315"
-                    src={i.content+"?loop=1?autoplay=1"}>
-                  </iframe>
+                  <div className="videoWrapper">
+                    <iframe width="420" height="315"
+                      src={i.content+"&index=1"}>
+                    </iframe>
+                  </div>
                   {i.content}
                   { i.image &&
                     <Image

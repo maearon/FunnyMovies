@@ -34,14 +34,22 @@ end
 users = User.order(:created_at).take(6)
 50.times do
   # content = 'Content Micropost'
-  content = "https://www.youtube.com/embed/abPmZCZZrFA?si=CJdRW8sNd5laZsfJ"
+  # content = Faker::Lorem.sentence(word_count: 5)
+  content = "https://www.youtube.com/embed/abPmZCZZrFA?si=CJdRW8sNd5laZsfJ" # id video
+  # content = "https://www.youtube.com/embed?listType=playlist&list=UULPlyA28-01x4z60eWQ2kiNbA" # lastest
   users.each { |user| user.microposts.create!(content: content) }
 end
+
+# https://commentpicker.com/youtube-channel-id.php UC --> UU or View page source Search content="https://www.youtube.com/channel/
+users.first.microposts.create!(content:"https://www.youtube.com/embed?listType=playlist&list=UUEpwKlaYn7Li3Nh_kQLmCTA") # lastest
+users.first.microposts.create!(content:"https://www.youtube.com/embed?list=UULPlyA28-01x4z60eWQ2kiNbA") # most popular
+users.second.microposts.create!(content:"https://www.youtube.com/embed?list=UULPAyH4gCci0K41gNAxzIindg") # most popular
+users.third.microposts.create!(content:"https://www.youtube.com/embed?listType=playlist&list=UUH7RfbP4El0ykEAkvZphBmw") # lastest
 
 # Create following relationships.
 users = User.all
 user  = users.first
-following = users[2..50]
+following = users[1..50]
 followers = users[3..40]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
