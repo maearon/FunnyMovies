@@ -30,6 +30,10 @@ User.create!(name:  "someone@gmail.com",
               activated_at: Time.zone.now)
 end
 
+users = User.order(:created_at).take(6)
+users.first.microposts.create!(content:"https://www.youtube.com/embed/TE66McLMMEw?si=L1oVmpFrSWB-uKxN")
+users.first.microposts.create!(content:"https://www.youtube.com/embed/vUawE7RRywk?si=ntsZYlaL52qqJQob")
+
 # Generate microposts for a subset of users.
 # users = User.order(:created_at).take(6)
 # 50.times do

@@ -199,8 +199,8 @@ const Home: NextPage = () => {
             priority
           />
           <h1>{userData.value.name}</h1>
-          <span><Link href={"/users/"+userData.value.id}>view my profile</Link></span>
-          <span>{micropost} micropost{micropost !== 1 ? 's' : ''}</span>
+          {/* <span><Link href={"/users/"+userData.value.id}>view my profile</Link></span> */}
+          <span>{micropost} post{micropost !== 1 ? 's' : ''}</span>
         </section>
 
         {/* <section className="stats">
@@ -265,7 +265,7 @@ const Home: NextPage = () => {
                 
                 <span className="content">
                   <b>{i.title}</b>
-                  <Link href={"https://www.youtube.com/results?search_query="+i.channelTitle}>({i.channelTitle})</Link>
+                  <Link target="_blank" href={"https://www.youtube.com/results?search_query="+i.channelTitle}>({i.channelTitle})</Link>
                   <div className="videoWrapper">
                     <iframe
                       src={"https://www.youtube.com/embed/"+i.videoId}
