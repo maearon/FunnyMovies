@@ -10,12 +10,8 @@ import micropostApi, { CreateResponse, ListResponse, Micropost } from '../compon
 import errorMessage from '../components/shared/errorMessages'
 import flashMessage from '../components/shared/flashMessages'
 import { useAppSelector } from '../redux/hooks'
-import { selectUser } from '../redux/session/sessionSlice'
-// Alt + Shift + O
-
-// interface Props {
-//   userData: UserState;
-// }
+import { fetchUser, selectUser } from '../redux/session/sessionSlice'
+import { useDispatch } from 'react-redux';
 
 const Home: NextPage = () => {
   const [page, setPage] = useState(1)
@@ -29,9 +25,10 @@ const Home: NextPage = () => {
   const [image, setImage] = useState(null)
   const [imageName, setImageName] = useState('')
   const inputEl = useRef() as MutableRefObject<HTMLInputElement>
-  const inputImage = useRef() as MutableRefObject<HTMLInputElement>
   const [errors, setErrors] = useState([] as string[])
   const userData = useAppSelector(selectUser)
+  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
 
   const extractVideoId = (youtubeUrl: string): string | null => {
     const regExp = /embed\/([^?]*)/;
@@ -40,9 +37,7 @@ const Home: NextPage = () => {
   };
 
   const fetchVideoDetails = async (videoId: string) => {
-    // https://www.geeksforgeeks.org/how-to-get-youtube-video-data-by-using-youtube-data-api-and-php/
-    // https://console.cloud.google.com/apis/credentials?orgonly=true&project=apt-helix-426002-r5&supportedpurview=project,organizationId,folder
-    const apiKey = 'AIzaSyAkH2rWcj2SLdgLSpSxg6yxsVQAupJ38FE'; // Replace with your YouTube API key
+    const apiKey = 'AIzaSyAkH2rWcj2SLdgLSpSxg6yxsVQAupJ38FE';
     const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`;
 
     try {
@@ -97,8 +92,19 @@ const Home: NextPage = () => {
   }, [page])
 
   useEffect(() => {
-    if (userData.loggedIn) { setFeeds()}
-  }, [setFeeds, userData.loggedIn])
+    const fetchUserData = async () => {
+      try {
+        await dispatch(fetchUser());
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+      } finally {
+        setFeeds();
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [dispatch, setFeeds]);
 
   const handlePageChange = (pageNumber: React.SetStateAction<number>) => {
     setPage(pageNumber)
@@ -106,20 +112,6 @@ const Home: NextPage = () => {
 
   const handleContentInput = (e: any) => {
     setContent(e.target.value)
-  }
-
-  const handleImageInput = (e: any) => {
-    if (e.target.files[0]) {
-      const size_in_megabytes = e.target.files[0].size/1024/1024
-      if (size_in_megabytes > 512) {
-        alert("Maximum file size is 512MB. Please choose a smaller file.")
-        setImage(null)
-        e.target.value = null
-      } else {
-        setImage(e.target.files[0])
-        setImageName(e.target.files[0].name)
-      }
-    }
   }
 
   const handleSubmit = (e: any) => {
@@ -160,7 +152,6 @@ const Home: NextPage = () => {
         flashMessage(...data.flash)
         setContent('')
         setImage(null)
-        // inputImage.current.value = ''
         setErrors([])
       }
       if (data.error) {
@@ -188,14 +179,14 @@ const Home: NextPage = () => {
     }
   }
 
-  return userData.status === 'failed' ? (
+  return loading ? (
     <>
     <Skeleton height={304} />
     <Skeleton circle={true} height={60} width={60} />
     </>
   ) : userData.error ? (
     <h2>{userData.error}</h2>
-  ) : userData.loggedIn ? (
+  ) : userData.value.email ? (
     <div className="row">
       <aside className="col-md-4">
         <section className="user_info">
@@ -212,7 +203,7 @@ const Home: NextPage = () => {
           <span>{micropost} micropost{micropost !== 1 ? 's' : ''}</span>
         </section>
 
-        <section className="stats">
+        {/* <section className="stats">
           <div className="stats">
             <Link href={"/users/"+userData.value.id+"/following"}>
               <strong id="following" className="stat">
@@ -225,7 +216,7 @@ const Home: NextPage = () => {
               </strong> followers
             </Link>
           </div>
-        </section>
+        </section> */}
 
         <section className="micropost_form">
           <form
@@ -248,31 +239,13 @@ const Home: NextPage = () => {
                 onChange={handleContentInput}
                 >
                 </textarea>
-                {/* <Field
-                  as='textarea'
-                  id='comments'
-                  name='comments'
-                  validate={validateComments}
-                />
-                <ErrorMessage name='comments' component={TextError} /> */}
             </div>
             <input ref={inputEl} type="submit" name="commit" value="Share" className="btn btn-primary" data-disable-with="Post" />
-            {/* <span className="image">
-              <input
-              ref={inputImage}
-              accept="image/jpeg,image/gif,image/png"
-              type="file"
-              name="micropost[image]"
-              id="micropost_image"
-              onChange={handleImageInput}
-              />
-            </span> */}
           </form>
         </section>
       </aside>
 
       <div className="col-md-8">
-        {/* <h3>Micropost Feed</h3> */}
         {feed_items.length > 0 &&
         <>
         <ol className="microposts">
@@ -355,14 +328,3 @@ const Home: NextPage = () => {
 }
 
 export default Home
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   try {
-//     const userData = useAppSelector(selectUser);
-//     return { userData }
-//   } catch {
-//     return {
-//       props: {}
-//     }
-//   }
-// }
