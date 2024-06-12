@@ -13,7 +13,7 @@ export interface LoginField {
 }
 
 export interface Response<User> {
-  status: string
+  status?: number
   type: string
   currentAuthority: string
   user?: User

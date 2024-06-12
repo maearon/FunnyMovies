@@ -1,16 +1,16 @@
 "use client";
 import { NextPage } from 'next'
 import Image from "next/image";
-import styles from "./page.module.css";
+import styles from "../page.module.css";
 import Link from 'next/link'
 import React, { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react'
 import Pagination from 'react-js-pagination'
 import Skeleton from 'react-loading-skeleton'
-import micropostApi, { CreateResponse, ListResponse, Micropost } from '../components/shared/api/micropostApi'
-import errorMessage from '../components/shared/errorMessages'
-import flashMessage from '../components/shared/flashMessages'
-import { useAppSelector } from '../redux/hooks'
-import { selectUser } from '../redux/session/sessionSlice'
+import micropostApi, { CreateResponse, ListResponse, Micropost } from '../../components/shared/api/micropostApi'
+import errorMessage from '../../components/shared/errorMessages'
+import flashMessage from '../../components/shared/flashMessages'
+import { useAppSelector } from '../../redux/hooks'
+import { selectUser } from '../../redux/session/sessionSlice'
 // Alt + Shift + O
 
 // interface Props {
@@ -160,7 +160,7 @@ const Home: NextPage = () => {
         flashMessage(...data.flash)
         setContent('')
         setImage(null)
-        // inputImage.current.value = ''
+        inputImage.current.value = ''
         setErrors([])
       }
       if (data.error) {
@@ -197,8 +197,8 @@ const Home: NextPage = () => {
     <h2>{userData.error}</h2>
   ) : userData.loggedIn ? (
     <div className="row">
-      <aside className="col-md-4">
-        <section className="user_info">
+      <aside className="col-md-4 col-md-offset-4">
+        {/* <section className="user_info">
           <Image
             className={"gravatar"}
             src={"https://secure.gravatar.com/avatar/"+gravatar+"?s=50"}
@@ -225,7 +225,7 @@ const Home: NextPage = () => {
               </strong> followers
             </Link>
           </div>
-        </section>
+        </section> */}
 
         <section className="micropost_form">
           <form
@@ -270,70 +270,10 @@ const Home: NextPage = () => {
           </form>
         </section>
       </aside>
-
-      <div className="col-md-8">
-        {/* <h3>Micropost Feed</h3> */}
-        {feed_items.length > 0 &&
-        <>
-        <ol className="microposts">
-          { feed_items.map((i:any, t) => (
-              <li key={t} id= {'micropost-'+i.id} >
-                <Link href={'/users/'+i.user_id}>
-                  <Image
-                    className={"gravatar"}
-                    src={"https://secure.gravatar.com/avatar/"+i.gravatar_id+"?s="+i.size}
-                    alt={i.user_name}
-                    width={i.size}
-                    height={i.size}
-                    priority
-                  />
-                </Link>
-                <span className="user"><Link href={'/users/'+i.user_id}>{i.user_name}</Link></span>
-                
-                <span className="content">
-                  <b>{i.title}</b>
-                  <Link href={"https://www.youtube.com/results?search_query="+i.channelTitle}>({i.channelTitle})</Link>
-                  <div className="videoWrapper">
-                    <iframe
-                      src={"https://www.youtube.com/embed/"+i.videoId}
-                      data-autoplay-src={"https://www.youtube.com/embed/"+i.videoId+"?autoplay=1"}> 
-                    </iframe>
-                  </div>
-                  {i.description}
-                  { i.image &&
-                    <Image
-                      src={''+i.image+''}
-                      alt="Example User"
-                      width={50}
-                      height={50}
-                      priority
-                    />
-                  }
-                </span>
-                <span className="timestamp">
-                {'Shared '+i.timestamp+' ago. '}
-                {userData.value.id === i.user_id &&
-                  <Link href={'#/microposts/'+i.id} onClick={() => removeMicropost(i.id)}>delete</Link>
-                }
-                </span>
-              </li>
-          ))}
-        </ol>
-
-        <Pagination
-          activePage={page}
-          itemsCountPerPage={5}
-          totalItemsCount={total_count}
-          pageRangeDisplayed={5}
-          onChange={handlePageChange}
-        />
-        </>
-        }
-      </div>
   </div>
   ) : (
     <>
-    <div className="center jumbotron">
+    {/* <div className="center jumbotron">
         <h1>Welcome to the Sample App</h1>
         <h2>
         This is the home page for the <Link href="https://nextjs.org/" target="_blank">NextJS Tutorial</Link> sample application.
@@ -349,7 +289,7 @@ const Home: NextPage = () => {
         height={38}
         priority
       />
-    </Link>
+    </Link> */}
     </>
   )
 }

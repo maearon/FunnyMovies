@@ -1,6 +1,11 @@
 # FunnyMovies
 A web app for sharing YouTube videos.
 
+```
+user: someone@gmail.com
+password: foobar
+```
+
 # README
 
 This README would normally document whatever steps are necessary to get the

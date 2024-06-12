@@ -3,7 +3,8 @@ import Link from 'next/link'
 
 const Footer: NextPage = () => {
   return (
-    <footer className="footer">
+    <>
+    {/* <footer className="footer">
       <small>
         The <Link href="https://nextjs.org/" target="_blank">NextJS Tutorial</Link> by <Link href="https://github.com/maearon" target="_blank">maearon</Link>
       </small>
@@ -14,7 +15,8 @@ const Footer: NextPage = () => {
           <li><Link href="https://nextjs.org/blog" target="_blank">News</Link></li>
         </ul>
       </nav>
-    </footer>
+    </footer> */}
+    </>
   )
 }
 

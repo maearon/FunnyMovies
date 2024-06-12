@@ -32,7 +32,7 @@ const New: NextPage = () => {
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberme] = useState(true)
   const inputEl = useRef() as MutableRefObject<HTMLInputElement>
-  // const [errors, setErrors] = useState([] as any)
+  const [errors, setErrors] = useState([] as string[])
   const dispatch = useDispatch()
 
   const validationSchema = Yup.object({
@@ -43,6 +43,7 @@ const New: NextPage = () => {
   })
 
   const onSubmit = (values: MyFormValues) => {
+    flashMessage("error", "User or password incorrect")
     sessionApi.create(
       {
         session: {
@@ -65,24 +66,18 @@ const New: NextPage = () => {
         dispatch(fetchUser())
         router.push("/")
       }
-      // if (response.error) {
-      //   console.log(Object.assign({}, response.error))
-      // }
       if (response.flash) {
         flashMessage(...response.flash)
       }
+      if (response.status === 401) {
+        setErrors(["User or password incorrect"])
+      }
     })
     .catch(error => {
-      console.log(error)
+      flashMessage("error", error.toString())
+      setErrors(["User or password incorrect"])
     })
-    // e.preventDefault()
   }
-
-  // const formik: FormikProps<MyFormValues> = useFormik<MyFormValues>({
-  //   initialValues,
-  //   onSubmit,
-  //   validationSchema
-  // })
 
   return (
     <React.Fragment>
@@ -93,14 +88,11 @@ const New: NextPage = () => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
-          // validateOnChange={false}
-          // validateOnBlur={false}
-          // validateOnMount
         >
         <Form>
-          {/* { Object.keys(formik.errors).length !== 0 && formik.touched &&
-            errorMessage(Object.keys(formik.errors).map((key) => (formik.errors as any)[key]))
-          } */}
+          { errors.length !== 0 &&
+            errorMessage(errors)
+          }
 
           <label htmlFor="session_email">Email</label>
           <Field
@@ -124,50 +116,6 @@ const New: NextPage = () => {
           <ErrorMessage name='password'>
             {error => <div className='error' style={{color : 'red'}}>{error}</div>}
           </ErrorMessage>
-
-          {/* <label htmlFor='address'>Address</label>
-          <Field name='address'>
-            {(props: { field: any; form: any; meta: any }) => {
-              const { field, form, meta } = props
-              console.log('Field render')
-              return (
-                <div>
-                  <input type='text' {...field} />
-                  {meta.touched && meta.error ? (
-                    <div>{meta.error}</div>
-                  ) : null}
-                </div>
-              )
-            }}
-          </Field>
-          <label htmlFor='address'>Address</label>
-          <FastField name='address'>
-            {({ field, form, meta }) => {
-              // console.log('Field render')
-              return (
-                <div>
-                  <input type='text' {...field} />
-                  {meta.touched && meta.error ? (
-                    <div>{meta.error}</div>
-                  ) : null}
-                </div>
-              )
-            }}
-          </FastField>
-          <label htmlFor='address'>Address</label>
-          <FastField name='address'>
-            {({ field, form, meta }) => {
-              // console.log('Field render')
-              return (
-                <div>
-                  <input type='text' {...field} />
-                  {meta.touched && meta.error ? (
-                    <div>{meta.error}</div>
-                  ) : null}
-                </div>
-              )
-            }}
-          </FastField> */}
 
           <label className="checkbox inline" htmlFor="session_remember_me">
             <input
