@@ -60,6 +60,11 @@ group :production do
   gem "aws-sdk-s3", require: false
 end
 
+group :test do
+  gem "capybara"
+  gem "selenium-webdriver"
+end
+
 gem "kaminari"
 gem "activerecord_reset_pk_sequence"
 gem "rack-cors"

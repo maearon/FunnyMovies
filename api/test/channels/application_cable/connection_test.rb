@@ -1,7 +1,7 @@
 require "test_helper"
 
 module ApplicationCable
-  class ConnectionTest < ActionCable::Connection::TestCase
+  class ConnectionTest < ActionCable::Connection::TestCase # bin/rails test test/channels
     # test "connects with cookies" do
     #   cookies.signed[:user_id] = 42
     #
