@@ -307,13 +307,16 @@ const Home: NextPage = () => {
   ) : (
     <>
     <div className="center jumbotron">
-        <h1>Welcome to the Sample App</h1>
+        <h1>Welcome to the Funny Movies App</h1>
+        {/* <h2>
+        This is the home page for the <Link href="https://nextjs.org/" target="_blank">NextJS Tutorial</Link> funny movies application.
+        </h2> */}
         <h2>
-        This is the home page for the <Link href="https://nextjs.org/" target="_blank">NextJS Tutorial</Link> sample application.
+        This is the home page for the funny movies application.
         </h2>
         <Link href="/signup" className="btn btn-lg btn-primary">Sign up now!</Link>
     </div>
-    <Link href="https://nextjs.org/" target="_blank">
+    {/* <Link href="https://nextjs.org/" target="_blank">
       <Image
         className={styles.logo}
         src="/next.svg"
@@ -322,7 +325,7 @@ const Home: NextPage = () => {
         height={38}
         priority
       />
-    </Link>
+    </Link> */}
     </>
   )
 }

@@ -1,10 +1,11 @@
 michael:
   name: Michael Example
   email: michael@example.com
-  password_digest: <%= User.digest('password') %>
+  # password_digest: <%= User.digest('password') %>
   admin: true
   activated: true
   activated_at: <%= Time.zone.now %>
+  password_digest: <%= BCrypt::Password.create('password') %>
 
 archer:
   name: Sterling Archer

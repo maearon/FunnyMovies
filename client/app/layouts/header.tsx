@@ -71,12 +71,24 @@ const Header: NextPage = () => {
               <>
                 <li><Link href={`/users/${userData.value.id}`}>{"Welcome " + userData.value.email}</Link></li>
                 <li className="divider"></li>
-                <li><Link href="/share">Share a movie</Link></li>
+                <li><Link href="/share">
+                  <div className="btn btn-primary">
+                    Share a movie
+                  </div>
+                </Link></li>
                 <li className="divider"></li>
-                <li><Link href="#logout" onClick={onClick}>Logout</Link></li>
+                <li><Link href="#logout" onClick={onClick}>
+                  <div className="btn btn-primary">
+                    Logout
+                  </div>
+                </Link></li>
               </>
             ) : (
-              <li><Link href="/login">Login / Register</Link></li>
+              <li><Link href="/login">
+                <div className="btn btn-primary">
+                  Login / Register
+                </div>
+              </Link></li>
             )}
           </ul>
         </nav>

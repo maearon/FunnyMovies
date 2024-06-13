@@ -1,33 +1,29 @@
-require "test_helper"
+require 'test_helper'
 
-class MicropostsControllerTest < ActionDispatch::IntegrationTest
-
+class Api::MicropostsControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @micropost = microposts(:orange)
+    @user = users(:michael)  # Replace with your fixture or factory method
+    @micropost = @user.microposts.create(content: "Lorem ipsum")
+    @headers = { "Authorization" => token_for(@user) }
   end
 
-  test "should redirect create when not logged in" do
-    assert_no_difference 'Micropost.count' do
-      post microposts_path, params: { micropost: { content: "Lorem ipsum" } }
-    end
-    assert_redirected_to login_url
+  # Method to generate JWT token
+  def token_for(user)
+    JsonWebToken.encode(user_id: user.id)
   end
 
-  test "should redirect destroy when not logged in" do
+  test "should not create micropost without authentication" do
     assert_no_difference 'Micropost.count' do
-      delete micropost_path(@micropost)
+      post api_microposts_path, params: { micropost: { content: "Lorem ipsum" } }
     end
-    assert_response :see_other
-    assert_redirected_to login_url
   end
 
-  test "should redirect destroy for wrong micropost" do
-    log_in_as(users(:michael))
-    micropost = microposts(:ants)
+  test "should not destroy micropost for incorrect user" do
+    other_user = users(:archer)  # Assuming another user exists in your fixtures
+    token = token_for(other_user)
+    headers = { "Authorization" => token }
     assert_no_difference 'Micropost.count' do
-      delete micropost_path(micropost)
+      delete api_micropost_path(@micropost), headers: headers
     end
-    assert_response :see_other
-    assert_redirected_to root_url
   end
 end
