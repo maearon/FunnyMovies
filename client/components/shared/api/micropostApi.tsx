@@ -1,5 +1,6 @@
 // import { ListParams, ListResponse, Student } from 'models';
 import API from '.';
+import { ErrorMessageType } from '../errorMessages';
 
 export interface ListParams {
   page?: number
@@ -43,7 +44,7 @@ export interface Micropost {
 
 export interface CreateResponse {
   flash?: [message_type: string, message: string]
-  error?: string[]
+  error?: ErrorMessageType
 }
 
 export interface Response {

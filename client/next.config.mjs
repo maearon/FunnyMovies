@@ -11,6 +11,18 @@ const nextConfig = {
         port: '',
         pathname: '/avatar/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost:3001',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'youtube.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

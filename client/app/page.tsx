@@ -7,7 +7,7 @@ import React, { MutableRefObject, useCallback, useEffect, useRef, useState } fro
 import Pagination from 'react-js-pagination'
 import Skeleton from 'react-loading-skeleton'
 import micropostApi, { CreateResponse, ListResponse, Micropost } from '../components/shared/api/micropostApi'
-import errorMessage from '../components/shared/errorMessages'
+import ShowErrors, { ErrorMessageType } from '@/components/shared/errorMessages'
 import flashMessage from '../components/shared/flashMessages'
 import { useAppSelector } from '../redux/hooks'
 import { fetchUser, selectUser } from '../redux/session/sessionSlice'
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
   const [image, setImage] = useState(null)
   const [imageName, setImageName] = useState('')
   const inputEl = useRef() as MutableRefObject<HTMLInputElement>
-  const [errors, setErrors] = useState([] as string[])
+  const [errors, setErrors] = useState<ErrorMessageType>({});
   const userData = useAppSelector(selectUser)
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
@@ -152,7 +152,7 @@ const Home: NextPage = () => {
         flashMessage(...data.flash)
         setContent('')
         setImage(null)
-        setErrors([])
+        setErrors({})
       }
       if (data.error) {
         inputEl.current.blur()
@@ -226,8 +226,8 @@ const Home: NextPage = () => {
           method="post"
           onSubmit={handleSubmit}
           >
-            { errors.length !== 0 &&
-              errorMessage(errors)
+            {Object.keys(errors).length !== 0 &&
+              <ShowErrors errorMessage={errors} /> // Ensure errorMessage prop is correctly passed
             }
             <div className="field">
                 <label htmlFor="micropost[content]">Youtube URL:</label>

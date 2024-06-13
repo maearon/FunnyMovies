@@ -13,7 +13,6 @@ export interface LoginField {
 }
 
 export interface Response<User> {
-  status?: number
   type: string
   currentAuthority: string
   user?: User
@@ -29,6 +28,11 @@ export interface Response<User> {
   };
   flash?: [message_type: string, message: string]
   error?: string[]
+  status?: number
+  message?: string
+  errors: {
+    [key: string]: string[]
+  }
 }
 
 const sessionApi = {

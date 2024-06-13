@@ -7,10 +7,10 @@ import { useDispatch } from 'react-redux'
 import { fetchUser, User } from '../../redux/session/sessionSlice'
 import sessionApi, { Response } from '../../components/shared/api/sessionApi'
 import flashMessage from '../../components/shared/flashMessages'
-import errorMessage from '../../components/shared/errorMessages'
 import { ErrorMessage, Field, Form, Formik, FormikProps, useFormik, withFormik } from 'formik'
 import * as Yup from 'yup'
 import TextError from '../../components/shared/TextError'
+import ShowErrors, { ErrorMessageType } from '@/components/shared/errorMessages';
 
 const initialValues = {
   email: '',
@@ -32,7 +32,7 @@ const New: NextPage = () => {
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberme] = useState(true)
   const inputEl = useRef() as MutableRefObject<HTMLInputElement>
-  const [errors, setErrors] = useState([] as string[])
+  const [errors, setErrors] = useState<ErrorMessageType>({});
   const dispatch = useDispatch()
 
   const validationSchema = Yup.object({
@@ -70,12 +70,14 @@ const New: NextPage = () => {
         flashMessage(...response.flash)
       }
       if (response.status === 401) {
-        setErrors(["User or password incorrect"])
+        setErrors(response.errors)
+        console.log('error1', response.errors)
       }
     })
     .catch(error => {
       flashMessage("error", error.toString())
-      setErrors(["User or password incorrect"])
+      setErrors({email: ["or password incorrect"]})
+      console.log('error2', error)
     })
   }
 
@@ -90,8 +92,8 @@ const New: NextPage = () => {
           onSubmit={onSubmit}
         >
         <Form>
-          { errors.length !== 0 &&
-            errorMessage(errors)
+          {Object.keys(errors).length !== 0 &&
+            <ShowErrors errorMessage={errors} /> // Ensure errorMessage prop is correctly passed
           }
 
           <label htmlFor="session_email">Email</label>

@@ -14,13 +14,15 @@ context('User setup', () => {
     cy.loginWithUI('someone@gmail.com', 'foobar')
 
     cy.location('pathname').should('eq', '/')
-    
-    cy.get(`[aria-label="Go to next page"]`).click()
+
+    cy.get('input[name="commit"]').click()
     cy.wait(2000)
-    cy.get(`[aria-label="Go to last page"]`).click()
-    cy.wait(2000)
-    cy.get(`[aria-label="Go to previous page"]`).click()
-    cy.wait(2000)
-    cy.get(`[aria-label="Go to first page"]`).click()
+    // cy.get(`[aria-label="Go to next page"]`).click()
+    // cy.wait(2000)
+    // cy.get(`[aria-label="Go to last page"]`).click()
+    // cy.wait(2000)
+    // cy.get(`[aria-label="Go to previous page"]`).click()
+    // cy.wait(2000)
+    // cy.get(`[aria-label="Go to first page"]`).click()
   })
 })

@@ -3,21 +3,22 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/navigation'
 import React, { MutableRefObject, useRef, useState } from 'react'
 import userApi from '../../components/shared/api/userApi'
-import errorMessage from '../../components/shared/errorMessages'
 import flashMessage from '../../components/shared/flashMessages'
+import ShowErrors, { ErrorMessageType } from '@/components/shared/errorMessages';
 
 const initialState = {
   name: '',
   email: '',
   password: '',
   password_confirmation: '',
-  errorMessage: [] as string[],
+  errors: {} as ErrorMessageType,
 };
 
 const New: NextPage = () => {
   const router = useRouter()
   const [state, setState] = useState(initialState)
   const myRef = useRef() as MutableRefObject<HTMLInputElement>
+  const [errors, setErrors] = useState<ErrorMessageType>({});
 
   const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
@@ -44,22 +45,34 @@ const New: NextPage = () => {
         myRef.current.blur()
         setState({
           ...state,
-          errorMessage: [],
+          errors: {},
         });
         flashMessage(...response.flash as [message_type: string, message: string])
         router.push("/")
         // window.location.assign('https://mail.google.com/mail/u/0')  
       }
-      if (response.error) {
+      if (response.errors) {
         myRef.current.blur()
         setState({
           ...state,
-          errorMessage: response.error,
+          errors: response.errors,
         });
+        setErrors(response.errors)
+        console.log('error1', response.errors)
       }
     })
     .catch(error => {
-      console.log(error)
+      flashMessage("error", error.toString())
+      setErrors({
+        "email": [
+            "can't be blank",
+            "is invalid"
+        ],
+        "password_confirmation": [
+            "doesn't match Password"
+        ]
+    })
+      console.log('error2', error)
     })
     e.preventDefault()
   }
@@ -77,8 +90,8 @@ const New: NextPage = () => {
         method="post"
         onSubmit={handleSubmit}
         >
-          { state.errorMessage.length !== 0 &&
-            errorMessage(state.errorMessage)
+          {Object.keys(errors).length !== 0 &&
+            <ShowErrors errorMessage={errors} /> // Ensure errorMessage prop is correctly passed
           }
 
           <label htmlFor="user_name">Name</label>

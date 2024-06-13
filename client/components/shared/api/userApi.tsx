@@ -34,7 +34,11 @@ export interface SignUpField {
 export interface CreateResponse<UserCreate> {
   user?: UserCreate
   flash?: [message_type: string, message: string]
-  error?: string[]
+  status?: number
+  message?: string
+  errors: {
+    [key: string]: string[]
+  }
 }
 
 export interface UserShow {

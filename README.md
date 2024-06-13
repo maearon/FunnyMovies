@@ -6,7 +6,7 @@ user: someone@gmail.com
 password: foobar
 ```
 
-# README
+# README 
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
@@ -52,8 +52,10 @@ rails g scaffold Video url:string description:text
 * Configuration
 ```
 cd api/
-rails s
----> http://127.0.0.1:3000/
+rails s -p 3001
+---> http://127.0.0.1:3001/
+API Endpoints
+---> http://127.0.0.1:3001/rails/info/routes 
 ```
 * Database creation
 ```
@@ -63,6 +65,9 @@ rails db:migrate
 * Database initialization
 
 * How to run the test suite
+```
+rails t
+```
 
 * Services (job queues, cache servers, search engines, etc.)
 
@@ -75,4 +80,11 @@ npx create-next-app@latest
 cd client
 npm i 
 npm run dev
+---> http://127.0.0.1:3000/
+```
+* How to run the test suite e2e
+```
+cypress open
+---> step-1-signup.cy.js
+---> step-2-login.cy.js
 ```
