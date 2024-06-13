@@ -11,9 +11,9 @@ context('User setup', () => {
   it('login user', () => {
     cy.visit('http://localhost:3000/login')
 
-    cy.loginWithUI('example@railstutorial.org', 'foobar')
+    cy.loginWithUI('someone@gmail.com', 'foobar')
 
-    cy.location('pathname').should('eq', '/users/1')
+    cy.location('pathname').should('eq', '/')
     
     cy.get(`[aria-label="Go to next page"]`).click()
     cy.wait(2000)

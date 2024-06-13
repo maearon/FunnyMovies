@@ -37,20 +37,23 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
     "@graphql-codegen/add": "^3.1.1",
     "@graphql-codegen/cli": "^2.6.2",
     "@graphql-codegen/introspection": "^2.1.1",
     "@graphql-codegen/typescript": "^2.5.1",
     "@graphql-codegen/typescript-operations": "^2.4.2",
     "@graphql-codegen/typescript-react-apollo": "^3.2.16",
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-js-pagination": "^3.0.4",
     "@types/react-redux": "^7.1.20",
-    "cypress": "^9.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "cypress": "13.11.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.3",
+    "eslint-plugin-next": "^0.0.0",
+    "typescript": "^5"
   }
 }
