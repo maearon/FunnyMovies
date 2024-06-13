@@ -59,7 +59,7 @@ Rails.application.configure do
   # https://accounts.google.com/DisplayUnlockCaptcha
   # https://support.google.com/mail/answer/185833?hl=en
 
-  host = 'localhost:3000'
+  host = 'localhost:3001'
 
   config.action_mailer.default_url_options = {host: host, protocol: 'http'}
 
