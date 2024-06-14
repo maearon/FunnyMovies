@@ -23,6 +23,8 @@
     "babel-plugin-react-compiler": "^0.0.0-experimental-592953e-20240517",
     "date-fns": "^2.28.0",
     "formik": "^2.2.9",
+    "google-auth-library": "^9.11.0",
+    "googleapis": "^140.0.0",
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
     "graphql-tag": "^2.12.6",

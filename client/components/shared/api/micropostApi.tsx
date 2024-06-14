@@ -66,6 +66,11 @@ const micropostApi = {
     const url = `/microposts/${id}`;
     return API.delete(url);
   },
+
+  likeOrDislikeYoutubeVideo(videoId: string, rating: string): Promise<Response> {
+    const url = `https://www.googleapis.com/youtube/v3/videos/rate?id=${videoId}&rating=${rating}`;
+    return API.post(url);
+  },
 };
 
 export default micropostApi;

@@ -13,6 +13,9 @@ import { useAppSelector } from '../redux/hooks'
 import { fetchUser, selectUser } from '../redux/session/sessionSlice'
 import { useDispatch } from 'react-redux';
 
+const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID!;
+const REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI!;
+
 const Home: NextPage = () => {
   const [page, setPage] = useState(1)
   const [feed_items, setFeedItems] = useState([] as Micropost[])
@@ -29,6 +32,7 @@ const Home: NextPage = () => {
   const userData = useAppSelector(selectUser)
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
+  const [authCode, setAuthCode] = useState<string | null>(null);
 
   const extractVideoId = (youtubeUrl: string): string | null => {
     const regExp = /embed\/([^?]*)/;
@@ -37,6 +41,8 @@ const Home: NextPage = () => {
   };
 
   const fetchVideoDetails = async (videoId: string) => {
+    // https://www.geeksforgeeks.org/how-to-get-youtube-video-data-by-using-youtube-data-api-and-php/
+    // https://console.cloud.google.com/apis/credentials?orgonly=true&project=apt-helix-426002-r5&supportedpurview=project,organizationId,folder
     const apiKey = 'AIzaSyAkH2rWcj2SLdgLSpSxg6yxsVQAupJ38FE';
     const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`;
 
@@ -103,8 +109,39 @@ const Home: NextPage = () => {
       }
     };
 
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      if (code && !authCode) {
+        setAuthCode(code);
+      }
+    }
+
     fetchUserData();
-  }, [dispatch, setFeeds]);
+  }, [authCode, dispatch, setFeeds]);
+
+  const handleAuthClick = () => {
+    const authUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/youtube.force-ssl`;
+    window.location.href = authUrl;
+  };
+
+  const handleRate = async (videoId: string, rating: 'like' | 'dislike') => {
+    try {
+      const response = await fetch(`https://www.googleapis.com/youtube/v3/videos/rate?id=${videoId}&rating=${rating}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ videoId, rating, authCode }),
+      });
+
+      const data = await response.json();
+      // setMessage(data.message);
+    } catch (error) {
+      console.error(error);
+      // setMessage('Error occurred');
+    }
+  };
 
   const handlePageChange = (pageNumber: React.SetStateAction<number>) => {
     setPage(pageNumber)
@@ -178,6 +215,22 @@ const Home: NextPage = () => {
       })
     }
   }
+
+  // const likeOrDislikeYoutubeVideo = (videoId: string, rating: string) => {
+  //   // let sure = window.confirm("You sure?")
+  //   // if (sure === true) {
+  //   micropostApi.likeOrDislikeYoutubeVideo(videoId, rating)
+  //   .then(response => {
+  //     if (response.flash) {
+  //       flashMessage(...response.flash)
+  //       setFeeds()
+  //     }
+  //   })
+  //   .catch((error: any) => {
+  //     console.log(error)
+  //   })
+  //   // }
+  // }
 
   return loading ? (
     <>
@@ -273,7 +326,7 @@ const Home: NextPage = () => {
                     </iframe>
                   </div>
                   {i.description}
-                  { i.image &&
+                  {/* { i.image &&
                     <Image
                       src={''+i.image+''}
                       alt="Example User"
@@ -281,7 +334,13 @@ const Home: NextPage = () => {
                       height={50}
                       priority
                     />
-                  }
+                  } */}
+                  <div className="btn btn-primary" onClick={() => handleRate(i.videoId, "like")}>
+                    Like
+                  </div>
+                  <div className="btn btn-primary" onClick={() => handleRate(i.videoId, "dislike")}>
+                    Dislike
+                  </div>
                 </span>
                 <span className="timestamp">
                 {'Shared '+i.timestamp+' ago. '}
