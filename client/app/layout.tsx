@@ -1,4 +1,4 @@
-"use client";
+import React from 'react';
 import "../styles/globals.css"
 import Head from 'next/head'
 import Header from './layouts/header'
@@ -46,7 +46,7 @@ export default function RootLayout({
             <Header />
 
             <div className="container">
-              { children }
+              {children}
 
               <Footer />
             </div>

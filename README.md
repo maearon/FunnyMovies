@@ -72,6 +72,10 @@ rails t
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
+```
+https://vercel.com/maearons-projects/funny-movies/6Nbx9EfTqZnmaT5uVTsyMeosUx1f
+https://railstutorialapi.herokuapp.com/api
+```
 
 * ...
 
