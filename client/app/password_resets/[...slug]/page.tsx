@@ -1,10 +1,10 @@
-import { NextPage } from 'next'
-import { useRouter } from 'next/router'
+"use client";
+import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import flashMessage from '../../components/shared/flashMessages'
-import passwordResetApi from '../../components/shared/api/passwordResetApi'
+import flashMessage from '../../../components/shared/flashMessages'
+import passwordResetApi from '../../../components/shared/api/passwordResetApi'
 import { MutableRefObject, useRef, useState } from 'react'
-import errorMessage from '../../components/shared/errorMessages'
+// import errorMessage from '../../components/shared/errorMessages'
 
 const initialState = {
   password: '',
@@ -12,10 +12,14 @@ const initialState = {
   errorMessage: [] as string[],
 };
 
-const Edit: NextPage = () => {
+const Edit = ({params}: {params: {slug: string[]}}) =>{
   const router = useRouter()
   const [state, setState] = useState(initialState)
-  const { email, slug } = router.query
+  const { reset_token, email } = 
+  params.slug.length === 2 ? 
+  // { reset_token: params.slug[0], email: params.slug[1] } 
+  { reset_token: params.slug[0], email: decodeURIComponent(params.slug[1]) } 
+  : { reset_token: '', email: '' };
   const dispatch = useDispatch()
   const myRef = useRef() as MutableRefObject<HTMLInputElement>
 
@@ -34,7 +38,7 @@ const Edit: NextPage = () => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     const { password, password_confirmation } = state
 
-    passwordResetApi.update(slug?.[0] as string,
+    passwordResetApi.update(reset_token as string,
       {
         email: email as string,
         user: {
@@ -57,6 +61,7 @@ const Edit: NextPage = () => {
         flashMessage(...response.flash as [message_type: string, message: string])
         router.push("/users/"+response.user_id)
       }
+      flashMessage('success', 'The password reset successfully, please try log in again')
     })
     .catch(error => {
       console.log(error)
@@ -74,9 +79,9 @@ const Edit: NextPage = () => {
           acceptCharset="UTF-8" method="post"
           onSubmit={handleSubmit}
           >
-            { state.errorMessage.length !== 0 &&
+            {/* { state.errorMessage.length !== 0 &&
               errorMessage(state.errorMessage)
-            }
+            } */}
 
             <input type="hidden" name="_method" value="patch"/><input type="hidden" name="authenticity_token" value="lzHcRJF-71OD3aFOiOtSPMemxmMm8m0FEhV8XDOwm6gTWYM0AbhPpRVbWl9-Q-7j6dM0qVMI7AQVDXHL8gm-Tg"/>
             <input type="hidden" name="email" id="email" value="manhng132@gmail.com"/>

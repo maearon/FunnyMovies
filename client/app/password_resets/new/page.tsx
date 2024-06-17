@@ -1,8 +1,9 @@
+"use client";
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { MutableRefObject, useRef, useState } from 'react'
-import passwordResetApi from '../../components/shared/api/passwordResetApi';
-import flashMessage from '../../components/shared/flashMessages';
+import passwordResetApi from '../../../components/shared/api/passwordResetApi';
+import flashMessage from '../../../components/shared/flashMessages';
 
 const initialState = {
   email: '',
@@ -36,11 +37,12 @@ const New: NextPage = () => {
       }
     ).then(response => {
       myRef.current.blur()
-      flashMessage(...response.flash as [message_type: string, message: string])
-      if (response.flash[0] === "info") {
+      flashMessage('success', 'The password reset email has been sent, please check your email')
+      // flashMessage(...response.flash as [message_type: string, message: string])
+      // if (response.flash[0] === "info") {
 
-        router.push("/")
-      }
+      //   router.push("/")
+      // }
       // if (response.flash[0] === "danger") {
         
       // }

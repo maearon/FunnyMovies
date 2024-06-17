@@ -2,15 +2,16 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { MutableRefObject, useRef, useState } from 'react'
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { fetchUser, User } from '../../redux/session/sessionSlice'
+import { fetchUser, selectUser, User } from '../../redux/session/sessionSlice'
 import sessionApi, { Response } from '../../components/shared/api/sessionApi'
 import flashMessage from '../../components/shared/flashMessages'
 import { ErrorMessage, Field, Form, Formik, FormikProps, useFormik, withFormik } from 'formik'
 import * as Yup from 'yup'
-import TextError from '../../components/shared/TextError'
+// import TextError from '../../components/shared/TextError'
 import ShowErrors, { ErrorMessageType } from '@/components/shared/errorMessages';
+import { useAppSelector } from '@/redux/hooks';
 
 const initialValues = {
   email: '',
@@ -34,6 +35,25 @@ const New: NextPage = () => {
   const inputEl = useRef() as MutableRefObject<HTMLInputElement>
   const [errors, setErrors] = useState<ErrorMessageType>({});
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
+  const userData = useAppSelector(selectUser)
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        await dispatch(fetchUser());
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+      } finally {
+        setLoading(false);
+        if (userData?.value?.email) {
+          router.push("/");
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [dispatch, router, userData?.value?.email]);
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -81,7 +101,17 @@ const New: NextPage = () => {
     })
   }
 
-  return (
+  return loading ? (
+    <>
+    <div>Loading...</div>
+    </>
+  ) : userData.error ? (
+    <h2>{userData.error}</h2>
+  ) : userData.value.email ? (
+    <>
+    <div>You did login, you now should in Home not Login...</div>
+    </>
+  ) : (
     <React.Fragment>
     <h1>Log in</h1>
     <div className="row">
@@ -104,7 +134,7 @@ const New: NextPage = () => {
           id="session_email"
           placeholder='Login user email'
           />
-          <ErrorMessage name='email' component={TextError} />
+          {/* <ErrorMessage name='email' component={TextError} /> */}
 
           <label htmlFor="session_password">Password</label>
           <Link href="/password_resets/new">(forgot password)</Link>

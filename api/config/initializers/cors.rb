@@ -78,7 +78,15 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 
   allow do
-    origins 'https://funny-movies-git-main-maearons-projects.vercel.app'
+    origins 'https://funny-movies-pied.vercel.app'
+
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true
+  end
+
+  allow do
+    origins 'https://sample-app-beta-lac.vercel.app'
 
     resource '*',
       headers: :any,

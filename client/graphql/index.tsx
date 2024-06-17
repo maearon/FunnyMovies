@@ -4,7 +4,7 @@ let BASE_URL = ''
 if (process.env.NODE_ENV === 'development') {
   BASE_URL = 'http://localhost:3001/graphql'
 } else {
-  BASE_URL = 'https://railstutorialapi.herokuapp.com/graphql'
+  BASE_URL = 'https://railstutorialapi.onrender.com/graphql'
 }
 
 // let token = ''

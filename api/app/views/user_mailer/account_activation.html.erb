@@ -6,5 +6,6 @@
 Welcome to the Funny Movies App! Click on the link below to activate your account:
 </p>
 
-<%= link_to "Activate", api_account_activation_path(@user.activation_token,
-                                                    email: @user.email, locale: nil) %>
+<%= link_to 'Activate', 
+            "https://funny-movies-pied.vercel.app/account_activations/#{@user.activation_token}/#{CGI.escape(@user.email)}", 
+            target: '_blank' %>

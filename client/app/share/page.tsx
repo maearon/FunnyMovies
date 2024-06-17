@@ -139,7 +139,7 @@ const Home: NextPage = () => {
     if (process.env.NODE_ENV === 'development') {
       BASE_URL = 'http://localhost:3001/api'
     } else if (process.env.NODE_ENV === 'production') {
-      BASE_URL = 'https://railstutorialapi.herokuapp.com/api'
+      BASE_URL = 'https://railstutorialapi.onrender.com/api'
     }
 
     fetch(BASE_URL+`/microposts`, {
@@ -165,7 +165,7 @@ const Home: NextPage = () => {
       }
       if (data.error) {
         inputEl.current.blur()
-        setErrors(data.error)
+        // setErrors(data.error)
       }
 
     })
@@ -235,9 +235,9 @@ const Home: NextPage = () => {
           method="post"
           onSubmit={handleSubmit}
           >
-            { errors.length !== 0 &&
+            {/* { errors.length !== 0 &&
               errorMessage(errors)
-            }
+            } */}
             <div className="field">
                 <label htmlFor="micropost[content]">Youtube URL:</label>
                 <textarea

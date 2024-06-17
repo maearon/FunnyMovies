@@ -1,3 +1,4 @@
+"use client";
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
@@ -36,9 +37,11 @@ const Header: NextPage = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("remember_token");
         localStorage.removeItem("refreshToken");
+        localStorage.removeItem("accessToken");
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("remember_token");
         sessionStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("accessToken");
         await dispatch(fetchUser());
         router.push("/")
       }

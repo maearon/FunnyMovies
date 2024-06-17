@@ -2,7 +2,7 @@
 A web app for sharing YouTube videos.
 
 ```
-user: someone@gmail.com
+email: someone@gmail.com
 password: foobar
 ```
 
@@ -73,8 +73,8 @@ rails t
 
 * Deployment instructions
 ```
-https://vercel.com/maearons-projects/funny-movies/6Nbx9EfTqZnmaT5uVTsyMeosUx1f
-https://railstutorialapi.herokuapp.com/api
+https://funny-movies-pied.vercel.app
+https://railstutorialapi.onrender.com
 ```
 
 * ...

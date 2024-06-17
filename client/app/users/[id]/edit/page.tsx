@@ -1,13 +1,13 @@
 "use client";
 import Image from 'next/image'
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react'
 import * as Yup from 'yup'
 import userApi, { UserEdit } from '../../../../components/shared/api/userApi'
 import errorMessage from '../../../../components/shared/errorMessages'
 import flashMessage from '../../../../components/shared/flashMessages'
-import TextError from '../../../../components/shared/TextError'
+// import TextError from '../../../../components/shared/TextError'
 
 const initialValues = {
   name: '',
@@ -140,9 +140,9 @@ const Edit = ({params}: {params: {id: string}}) => {
             // console.log('Formik props', formik)
             return (
         <Form>
-          { errors.length !== 0 &&
+          {/* { errors.length !== 0 &&
             errorMessage(errors)
-          }
+          } */}
           <label htmlFor="user_name">Name</label>
           <Field
           className="form-control"
@@ -150,7 +150,7 @@ const Edit = ({params}: {params: {id: string}}) => {
           name="name"
           id="user_name"
           />
-          <ErrorMessage name='name' component={TextError} />
+          {/* <ErrorMessage name='name' component={TextError} /> */}
 
           <label htmlFor="user_email">Email</label>
           <Field
@@ -159,7 +159,7 @@ const Edit = ({params}: {params: {id: string}}) => {
           name="email"
           id="user_email"
           />
-          <ErrorMessage name='email' component={TextError} />
+          {/* <ErrorMessage name='email' component={TextError} /> */}
 
           <label htmlFor="user_password">Password</label>
           <Field
@@ -168,7 +168,7 @@ const Edit = ({params}: {params: {id: string}}) => {
           name="password"
           id="user_password"
           />
-          <ErrorMessage name='password' component={TextError} />
+          {/* <ErrorMessage name='password' component={TextError} /> */}
 
           <label htmlFor="user_password_confirmation">Confirmation</label>
           <Field
@@ -177,7 +177,7 @@ const Edit = ({params}: {params: {id: string}}) => {
           name="password_confirmation"
           id="user_password_confirmation"
           />
-          <ErrorMessage name='password_confirmation' component={TextError} />
+          {/* <ErrorMessage name='password_confirmation' component={TextError} /> */}
 
           <label htmlFor="user_phones">List of phone numbers</label>
           <FieldArray name='phNumbers'>
