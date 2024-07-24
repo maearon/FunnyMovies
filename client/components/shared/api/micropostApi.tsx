@@ -59,7 +59,7 @@ const micropostApi = {
 
   // create(params: CreateParams): Promise<CreateResponse> {
   //   const url = '/microposts';
-  //   return API.post(url, params);
+  //   return API.post(url,params, headers: { Content-Type:'multipart/form-data' } })
   // },
 
   remove(id: number): Promise<Response> {

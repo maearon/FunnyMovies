@@ -31,24 +31,46 @@ const Header: NextPage = () => {
 
   const onClick = async (e: any) => {
     e.preventDefault();
-    sessionApi.destroy()
-    .then(async response => {
-      if (response.status === 200) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("remember_token");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("accessToken");
-        sessionStorage.removeItem("token");
-        sessionStorage.removeItem("remember_token");
-        sessionStorage.removeItem("refreshToken");
-        sessionStorage.removeItem("accessToken");
-        await dispatch(fetchUser());
-        router.push("/")
+    
+    try {
+      // Call the API to destroy the session
+      const response = await sessionApi.destroy();
+      
+      // Always clear local and session storage
+      localStorage.removeItem("token");
+      localStorage.removeItem("remember_token");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("accessToken");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("remember_token");
+      sessionStorage.removeItem("refreshToken");
+      sessionStorage.removeItem("accessToken");
+      await dispatch(fetchUser()); // Fetch user data if needed
+  
+      // Check the response status
+      if (response.status === 401) {
+        flashMessage("error", "Unauthorized")
       }
-    })
-    .catch(error => {
-      flashMessage("error", "logout error"+error)
-    })
+      
+      // Redirect to home page
+      router.push("/");
+    } catch (error) {
+      // Handle error and show flash message
+      flashMessage("error", "Logout error: " + error);
+      // Always clear local and session storage
+      localStorage.removeItem("token");
+      localStorage.removeItem("remember_token");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("accessToken");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("remember_token");
+      sessionStorage.removeItem("refreshToken");
+      sessionStorage.removeItem("accessToken");
+      await dispatch(fetchUser()); // Fetch user data if needed
+  
+      // Check the response status
+      flashMessage("error", "Unauthorized")
+    }
   };
 
   return (
