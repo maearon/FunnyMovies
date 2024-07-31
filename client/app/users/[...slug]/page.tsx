@@ -39,7 +39,7 @@ const ShowFollow = ({params}: {params: {slug: string[]}}) =>{
     setPage(pageNumber)
   }
 
-  const removeUser = (id: number) => {
+  const removeUser = (id: string) => {
     let sure = window.confirm("You sure?")
     if (sure === true) {
       userApi.destroy(id)

@@ -3,7 +3,7 @@ import API from '../../components/shared/api'
 import { RootState } from '../store';
 
 export interface User {
-  readonly id: number
+  readonly id: string
   email: string
   name: string
   role: boolean

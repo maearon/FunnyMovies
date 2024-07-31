@@ -42,7 +42,7 @@ const Index: NextPage = () => {
     setPage(pageNumber)
   }
 
-  const removeUser = (index: number, userid: number) => {
+  const removeUser = (index: number, userid: string) => {
     let sure = window.confirm("You sure?")
     if (sure === true) {
       userApi.destroy(userid

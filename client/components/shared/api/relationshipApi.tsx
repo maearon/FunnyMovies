@@ -18,7 +18,7 @@ const relationshipApi = {
     return API.post(url, params);
   },
 
-  destroy(id: number): Promise<DestroyResponse> {
+  destroy(id: string): Promise<DestroyResponse> {
     const url = `/relationships/${id}`;
     return API.delete(url);
   },

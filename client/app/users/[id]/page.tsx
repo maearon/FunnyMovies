@@ -64,7 +64,7 @@ const Show = ({ params }: { params: { id: string } }) => {
   const handleUnfollow = async (e: { preventDefault: () => void })  => {
     e.preventDefault();
     try {
-      const response = await relationshipApi.destroy(parseInt(id));
+      const response = await relationshipApi.destroy(id);
       if (response.unfollow) {
         setWall();
       }
@@ -126,7 +126,7 @@ const Show = ({ params }: { params: { id: string } }) => {
       </aside>
 
       <div className="col-md-8">
-        {currentUser && currentUser.value.id !== parseInt(id) && (
+        {currentUser && currentUser.value.id !== id && (
           <FollowForm
             id={id}
             user={user}

@@ -23,7 +23,7 @@ export interface Micropost {
   image: string
   size: number
   timestamp: string
-  readonly user_id: number
+  readonly user_id: string
   user_name?: string
   title?: string
   description?: string
