@@ -7,7 +7,7 @@ import Footer from './layouts/footer'
 import { Provider } from 'react-redux'
 import { store } from '../redux/store'
 import { fetchUser } from '../redux/session/sessionSlice'
-import { toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import localFont from "next/font/local";
 import Script from "next/script";
@@ -22,11 +22,6 @@ const geistMono = localFont({
 });
 
 store.dispatch(fetchUser())
-toast.configure({
-  autoClose: 8000,
-  draggable: false,
-  position: toast.POSITION.TOP_CENTER,
-})
 
 export default function RootLayout({
   children,
@@ -51,10 +46,18 @@ export default function RootLayout({
 
               <Footer />
             </div>
+
+            {/* Toast Container for managing toasts */}
+            <ToastContainer
+              autoClose={8000}
+              draggable={false}
+              position="top-center" // Use the position directly as a string
+            />
+
+            {/* External scripts */}
             <Script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></Script>
             <Script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></Script>
             <Script
-              // you might need to get a newer version
               src="https://kit.fontawesome.com/fbadad80a0.js"
               crossOrigin="anonymous"
             ></Script>
