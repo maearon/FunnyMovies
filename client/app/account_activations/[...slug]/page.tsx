@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import accountActivationApi from "@/components/shared/api/accountActivationApi";
 import flashMessage from "@/components/shared/flashMessages";
 
-// Định nghĩa kiểu dữ liệu cho props
+// Đảm bảo rằng props 'params' có kiểu đúng, không cần PageProps
 interface EditProps {
   params: {
     slug: string[]; // slug là mảng chuỗi
