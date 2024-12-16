@@ -1,59 +1,61 @@
 "use client";
-import { useRouter } from 'next/navigation'
-import accountActivationApi from '../../../components/shared/api/accountActivationApi'
-import { useDispatch } from 'react-redux'
-import flashMessage from '@/components/shared/flashMessages';
-// import flashMessage from '../../components/shared/flashMessages'
-// import { fetchUser } from '../../redux/session/sessionSlice'
 
-const Edit = ({params}: {params: {slug: string[]}}) =>{
-  const router = useRouter()
-  const { activation_token, email } = 
-  params.slug.length === 2 ? 
-  // { activation_token: params.slug[0], email: params.slug[1] } 
-  { activation_token: params.slug[0], email: decodeURIComponent(params.slug[1]) } 
-  : { activation_token: '', email: '' };
-  const dispatch = useDispatch()
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import accountActivationApi from "@/components/shared/api/accountActivationApi";
+import flashMessage from "@/components/shared/flashMessages";
 
-  // const extractEmail = (youtubeUrl: string, activation_token: string): string | null => {
-  //   const regExp = `/${activation_token}\/([^%40]*)/`;
-  //   const match = youtubeUrl.match(regExp);
-  //   return (match && match[1]) ? match[1] : null;
-  // };
-
-  accountActivationApi.update(activation_token as string, email as string
-  ).then(response => {
-    flashMessage('success', 'The account activated, please try log in')
-    router.push("/login")
-    setTimeout(function(){
-    // setInterval(function(){
-      // alert("Sup!"); 
-      if (response.user) {
-        // localStorage.setItem("token", response.jwt as string)
-        // localStorage.setItem("remember_token", response.token as string)
-        // router.push("/users/"+response.user.id)
-        // dispatch(fetchUser())
-        // flashMessage(...response.flash)
-        router.push("/login")
-        // flashMessage("success", "Account activated!")
-      } else {
-      // if (response.flash) {
-        // flashMessage(...response.flash)
-        router.push("/")
-      }
-    // }, 9000);
-    }, 9000);//wait 9 seconds
-  })
-  .catch(error => {
-    console.log(error)
-  })
-  return (
-      <>
-      <h1>Account Activationing ...</h1>
-      <h1>{activation_token}</h1>
-      <h1>{email}</h1>
-      </>
-  )
+// Định nghĩa kiểu PageProps cho params
+interface PageProps {
+  params: {
+    slug: string[];
+  };
 }
 
-export default Edit
+const Edit = ({ params }: PageProps) => {
+  const router = useRouter();
+  const { slug } = params;
+
+  // Phân tách slug thành activation_token và email
+  const { activation_token, email } =
+    slug.length === 2
+      ? { activation_token: slug[0], email: decodeURIComponent(slug[1]) }
+      : { activation_token: "", email: "" };
+
+  useEffect(() => {
+    if (!activation_token || !email) {
+      // Nếu thiếu token hoặc email -> redirect về trang chính
+      flashMessage("error", "Invalid activation link");
+      router.push("/");
+      return;
+    }
+
+    // Gọi API kích hoạt tài khoản
+    accountActivationApi
+      .update(activation_token, email)
+      .then((response) => {
+        flashMessage("success", "The account has been activated. Please log in.");
+        setTimeout(() => {
+          if (response.user) {
+            router.push("/login");
+          } else {
+            router.push("/");
+          }
+        }, 3000);
+      })
+      .catch((error) => {
+        console.error("Activation Error:", error);
+        flashMessage("error", "Account activation failed. Please try again.");
+        router.push("/");
+      });
+  }, [activation_token, email, router]);
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <h1>Activating your account...</h1>
+      <p>Please wait while we process your activation.</p>
+    </div>
+  );
+};
+
+export default Edit;
