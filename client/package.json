@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.12.3",
-    "@date-io/date-fns": "^3.0.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@graphql-codegen/typescript-apollo-client-helpers": "^3.0.0",
@@ -21,7 +20,6 @@
     "@types/yup": "^0.32.0",
     "axios": "^1.7.9",
     "babel-plugin-react-compiler": "^19.0.0-beta-df7b47d-20241124",
-    "date-fns": "^4.1.0",
     "formik": "^2.4.6",
     "google-auth-library": "^9.15.0",
     "googleapis": "^144.0.0",
