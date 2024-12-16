@@ -5,26 +5,16 @@ import { useRouter } from "next/navigation";
 import accountActivationApi from "@/components/shared/api/accountActivationApi";
 import flashMessage from "@/components/shared/flashMessages";
 
-// Định nghĩa kiểu PageProps cho params
-interface PageProps {
-  params: {
-    slug: string[];
-  };
-}
-
-const Edit = ({ params }: PageProps) => {
+export default function Edit({ params }: { params: { slug: string[] } }) {
   const router = useRouter();
-  const { slug } = params;
 
-  // Phân tách slug thành activation_token và email
-  const { activation_token, email } =
-    slug.length === 2
-      ? { activation_token: slug[0], email: decodeURIComponent(slug[1]) }
-      : { activation_token: "", email: "" };
+  // Giải mã slug thành activation_token và email
+  const activation_token = params.slug?.[0] || "";
+  const email = params.slug?.[1] ? decodeURIComponent(params.slug[1]) : "";
 
   useEffect(() => {
     if (!activation_token || !email) {
-      // Nếu thiếu token hoặc email -> redirect về trang chính
+      // Nếu thiếu token hoặc email -> hiển thị lỗi và redirect
       flashMessage("error", "Invalid activation link");
       router.push("/");
       return;
@@ -36,11 +26,7 @@ const Edit = ({ params }: PageProps) => {
       .then((response) => {
         flashMessage("success", "The account has been activated. Please log in.");
         setTimeout(() => {
-          if (response.user) {
-            router.push("/login");
-          } else {
-            router.push("/");
-          }
+          router.push("/login");
         }, 3000);
       })
       .catch((error) => {
@@ -56,6 +42,4 @@ const Edit = ({ params }: PageProps) => {
       <p>Please wait while we process your activation.</p>
     </div>
   );
-};
-
-export default Edit;
+}
