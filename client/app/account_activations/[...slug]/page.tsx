@@ -5,7 +5,14 @@ import { useRouter } from "next/navigation";
 import accountActivationApi from "@/components/shared/api/accountActivationApi";
 import flashMessage from "@/components/shared/flashMessages";
 
-export default function Edit({ params }: { params: { slug: string[] } }) {
+// Định nghĩa kiểu dữ liệu cho props
+interface EditProps {
+  params: {
+    slug: string[]; // slug là mảng chuỗi
+  };
+}
+
+export default function Edit({ params }: EditProps) {
   const router = useRouter();
 
   // Giải mã slug thành activation_token và email
