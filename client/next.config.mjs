@@ -23,6 +23,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'ruby-rails-boilerplate-3s9t.onrender.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   env: {  
