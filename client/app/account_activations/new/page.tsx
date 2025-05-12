@@ -61,6 +61,7 @@ const New: NextPage = () => {
       flashMessage('success', 'The activation email has been sent again, please check your email')
     })
     .catch(error => {
+      flashMessage('info', 'Account already activated')
       // flashMessage("error", error.toString())
       // setErrors({
       //   "email": [
