@@ -398,7 +398,7 @@ const Home: NextPage = () => {
           <div className="btn btn-primary" onClick={() => handleRate("Zuk5zGv5Un4", "like")}>Like</div>
           <div className="btn btn-primary" onClick={() => handleRate("Zuk5zGv5Un4", "dislike")}>Dislike</div>
         </span>
-        <Link href="/signup" className="btn btn-lg btn-primary">Sign up now! or login with email: manhng132@gmail.com pass: Abc@0974006807</Link>
+        <Link href="/signup" className="btn btn-lg btn-primary">Sign up now!</Link>
     </div>
     <Link href="https://nextjs.org/" target="_blank">
       <Image
