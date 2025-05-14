@@ -6,7 +6,6 @@ class Api::ApiController < ActionController::API
   protect_from_forgery with: :exception
   
   skip_before_action :verify_authenticity_token
-  before_action :authenticate!
 
   private
 
@@ -29,5 +28,9 @@ class Api::ApiController < ActionController::API
   def current_user
     user_id = Jwt::User::DecodeTokenService.call(request.headers['Authorization'])
     User.find_by(id: user_id) if user_id
+  end
+
+  def current_user_token
+    request.headers['Authorization']&.split[1]
   end
 end

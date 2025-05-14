@@ -3,7 +3,7 @@ version: "3.9"
 services:
   web:
     build: .
-    container_name: sample_app.api
+    container_name: api.api
     ports:
       - 3000:3000
     volumes:
@@ -13,7 +13,7 @@ services:
     working_dir: /app
     command: bundle exec puma -C config/puma.rb -e production
     networks:
-      - sample_app-networks
+      - api-networks
     depends_on:
       - postgres
     environment:
@@ -24,11 +24,11 @@ services:
 
   postgres:
     image: postgres:13
-    container_name: sample_app.postgres
+    container_name: api.postgres
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
-      - sample_app-networks
+      - api-networks
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
@@ -38,15 +38,15 @@ services:
   redis:
     image: redis
     command: redis-server
-    container_name: sample_app.redis
+    container_name: api.redis
     volumes:
       - redis-data:/var/shared/redis
     networks:
-      - sample_app-networks
+      - api-networks
 
 networks:
-  sample_app-networks:
-    name: sample_app
+  api-networks:
+    name: api
     external: true
 
 volumes:

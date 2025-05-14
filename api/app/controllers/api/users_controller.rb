@@ -1,10 +1,11 @@
 class Api::UsersController < Api::ApiController
-  before_action :authenticate!, except: %i[create]
+  before_action :authenticate!, except: %i[create, update, index]
   before_action :set_user,       except: %i[index create]
-  before_action :correct_user,   only: %i[update destroy]
+  before_action :correct_user,   only: %i[destroy]
   before_action :admin_user,     only: %i[destroy]
 
   def index
+    # @users = User.all.page(params[:page])
     @users = User.all.page(params[:page])
     @total, users = pager(User.all.order(id: :asc))
   end
@@ -26,10 +27,20 @@ class Api::UsersController < Api::ApiController
     end
   end
 
+  def edit
+  end
+
   def update
-    if @user.update(user_params)
-      # @user.unactivate if @user.saved_change_to_email? && @user.send_activation_email
-      response200
+    # binding.b
+    if user_params[:avatar].present?
+      if @user.avatar.attached?
+        @user.avatar.purge
+      end
+      @user.avatar.attach(user_params[:avatar])
+    end
+    if @user.update(user_params.except(:avatar))
+      @user.update(avatarUrl: rails_blob_url(@user.avatar, only_path: false)) if @user.avatar.attached?
+      render json: { flash: ["success", "Avatar's User updated!"], avatarUrl: @user.avatarUrl }
     else
       response422_with_error(@user.errors.messages)
     end
@@ -44,12 +55,14 @@ class Api::UsersController < Api::ApiController
     @title = "Following"
     @user  = User.find(params[:id])
     @users = @user.following.page(params[:page])
+    @xusers = @user.following
   end
 
   def followers
     @title = "Followers"
     @user  = User.find(params[:id])
     @users = @user.followers.page(params[:page])
+    @xusers = @user.followers
   end
 
   private
@@ -59,9 +72,10 @@ class Api::UsersController < Api::ApiController
   end
 
   def user_params
-    params.require(:user).permit(
-      :name, :email, :password, :password_confirmation
-    )
+    permitted_params = [:name, :email, :password, :password_confirmation]
+    permitted_params << :avatar if action_name == "update"
+  
+    params.require(:user).permit(*permitted_params)
   end
 
   def correct_user

@@ -6,6 +6,7 @@ class Api::SessionsController < Api::ApiController
     # sudo docker ps
     # sudo docker attach 32b385027bd8
     @current_user = current_user if current_user
+    @current_user_token = current_user_token if current_user_token
   end
 
   def create

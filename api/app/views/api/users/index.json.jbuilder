@@ -4,8 +4,10 @@ json.users do
     json.name u.name
     json.email u.email
     json.gravatar_id Digest::MD5::hexdigest(u.email.downcase)
-    json.size 50
-    json.admin u.admin
+    json.size 30
+    json.username u.username
+    json.displayName u.displayName
+    json.avatarUrl u.avatarUrl
   end
 end
 json.total_count @total

@@ -1,12 +1,12 @@
 databases:
   - name: postgres
     ipAllowList: []
-    databaseName: railstutorialapi
-    user: railstutorialapi
+    databaseName: api
+    user: api
 
 services:
   - type: web
-    name: railstutorialapi
+    name: api
     env: ruby
     buildCommand: "./render-build.sh"
     startCommand: "bundle exec rails s"

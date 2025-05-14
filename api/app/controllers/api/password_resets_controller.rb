@@ -9,7 +9,6 @@ class Api::PasswordResetsController < Api::ApiController
     if @user
       @user.create_reset_digest
       @user.send_password_reset_email
-      # User.digest(reset_token)
       response200
     else
       response401_with_error(error_message(:not_found_email))

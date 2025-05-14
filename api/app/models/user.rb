@@ -2,7 +2,9 @@ class User < ApplicationRecord
   include RefreshTokenUpdatable
   attr_accessor :activation_token, :reset_token
 
+  has_many :sessions, foreign_key: 'userId', dependent: :destroy
   has_many :microposts, dependent: :destroy
+  has_many :posts, foreign_key: 'userId', dependent: :destroy
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
                                   dependent:   :destroy
@@ -11,6 +13,9 @@ class User < ApplicationRecord
                                    dependent:   :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+  has_one_attached :avatar do |attachable|
+    attachable.variant :display, resize_to_limit: [500, 500]
+  end
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   # before_create :create_activation_digest
@@ -24,12 +29,18 @@ class User < ApplicationRecord
 
   default_scope { order(id: :asc) }
 
-  enum admin: { admin: true, user: false }
+  def admin?
+    self.admin == 1
+  end
 
   attribute :token, :string
   attribute :token_expiration_at, :string
   validates :refresh_token, uniqueness: true, allow_nil: true
   validates_by_type(type: :string, except: %i[email password_digest refresh_token], opt: STRING_VALIDATION)
+  has_one :cart, dependent: :destroy
+  has_one :wish, dependent: :destroy
+  has_many :orders, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   def auth?(password)
     authenticate(password)

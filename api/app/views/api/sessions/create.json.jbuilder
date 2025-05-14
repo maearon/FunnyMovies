@@ -1,9 +1,7 @@
-json.status 'ok'
-json.type 'account'
-json.currentAuthority @user.admin
 json.user do
-  json.extract! @user, :id, :email, :name
-  json.role @user.admin
+  json.extract! @user, :id, :email, :name, :admin
+  json.token @user.token
+  json.passwordHash @user.password_digest
 end
 json.tokens do
   json.access do
