@@ -13,7 +13,7 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version ```3.3.2```
+* Ruby version ```3.4.2```
 ```
 nvm install v22.2.0
 nvm alias default v22.2.0
