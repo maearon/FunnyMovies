@@ -94,6 +94,9 @@ const Home: NextPage = () => {
         setFollowers(response.followers)
         setMicropost(response.micropost)
         setGavatar(response.gravatar)
+        if (response.feed_items.length === 0 && page > 1) {
+          setPage(prev => prev - 1);
+        }
       } else {
         setFeedItems([])
       }
