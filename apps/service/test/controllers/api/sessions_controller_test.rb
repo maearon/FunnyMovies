@@ -26,8 +26,13 @@ class Api::SessionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
+    json = JSON.parse(response.body)
     @user.reload
     assert_not_nil @user.refresh_token
+    assert_equal @user.refresh_token, json.dig("tokens", "refresh", "token")
+    assert_equal @user.refresh_token, json["refresh_token"]
+    assert json.dig("tokens", "access", "token").present?
+    assert_not_equal json.dig("tokens", "access", "token"), json.dig("tokens", "refresh", "token")
   end
 
   test "login fails with wrong password" do
@@ -105,10 +110,16 @@ class Api::SessionsControllerTest < ActionDispatch::IntegrationTest
              refresh_token: @user.refresh_token
            }
          },
-         headers: { "Authorization" => "Bearer #{@token}" },
          as: :json
 
     assert_response :success
+
+    json = JSON.parse(response.body)
+    assert json["token"].present?
+    assert json["refresh_token"].present?
+    assert_not_equal json["token"], json["refresh_token"]
+    assert_equal json["token"], json.dig("tokens", "access", "token")
+    assert_equal json["refresh_token"], json.dig("tokens", "refresh", "token")
   end
 
   test "refresh fails when token invalid" do

@@ -1,5 +1,5 @@
 class Api::SessionsController < Api::ApiController
-  before_action :authenticate!, except: %i[create]
+  before_action :authenticate!, except: %i[create refresh revoke]
 
   def index
     @current_user = current_user if current_user
